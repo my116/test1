@@ -1,0 +1,489 @@
+@charset "utf-8";
+/*会员管理层叠样式表*/
+
+.member{
+	position:relative;
+	width:1200px;
+	height:auto;
+	overflow: hidden;
+}
+.member .member-page-index, .member .member-page-info{
+	width:100%;
+	overflow: hidden;
+}
+.member-index-search-box{
+	position:relative;
+	width:1200px;
+	height:100px;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	margin:16px 0 12px;
+	background-color:#fff;
+}
+.member-index-search-box label{
+	position:absolute;
+	font-size: 14px;
+	color:#333;
+	top:36px;
+	left:22px;
+}
+.member-index-search-box input{
+	position:absolute;
+	width:216px;
+	height:40px;
+	box-sizing:border-box;
+	top:26px;
+	left:88px;
+	border:1px solid #ccc;
+	background-color:#ebe7e7;
+	text-indent:10px;
+}
+.member-index-search-box .search-btn{
+	display:block;
+	position: absolute;
+	top:26px;
+	left:330px;
+	width:62px;
+	height:40px;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	font-size: 14px;
+	color:#333;
+	text-align: center;
+	line-height: 40px;
+	transition:all .3s;
+}
+.member-index-search-box .search-btn:hover{
+	background-color:#e39700;
+	color:#fff;
+}
+.member .add-member-btn, .member .export-member-btn{
+	display:inline-block;
+	width:116px;
+	height:50px;
+	margin:0 8px 12px 0;
+	box-sizing:border-box;
+	border:1px solid #e79100;
+	text-align: center;
+	line-height: 50px;
+	font-size: 14px;
+	transition:all .3s;
+}
+.member .add-member-btn{
+	background-color:#e79100;
+	color:#fff;
+}
+.member .export-member-btn{
+	color:#e79100;
+}
+	/*会员管理列表*/
+.members-list{
+	width:1200px;
+	height:auto;
+	margin-bottom: 23px;
+}
+.members-list thead tr{
+	width:1200px;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	background-color:#fff;
+}
+.members-list thead tr td{
+	height:60px;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.members-list tbody tr{
+	width:1200px;
+	border-bottom:1px solid #ccc;
+}
+.members-list tbody tr:hover{
+	background-color:#f3d6ce;
+}
+.members-list td{
+	height:50px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	color:#333;
+}
+/*.members-list .item-number{
+	width:100px;
+}
+.members-list .member-name{
+	width:150px;
+}
+.members-list .member-sex{
+	width:100px;
+}
+.members-list .member-id{
+	width:150px;
+}
+.members-list .member-class{
+	width:150px;
+}
+.members-list .member-money{
+	width:130px;
+}
+.members-list .member-tel{
+	width:200px;
+}*/
+.members-list .member-func{
+	width:220px;
+}
+.members-list .member-func .member-info-btn{
+	display:none;
+	width:65px;
+	height:33px;
+	background-color:#cf3d14;
+	color:#fff;
+	border-radius: 9px;
+	line-height: 33px;
+	text-align: center;
+	cursor:pointer;
+}
+.members-list tr:hover .member-func .member-info-btn{
+	display:inline-block;
+}
+.members-list .member-func .member-recharge-btn{
+	display: none;
+	width: 65px;
+	height:33px;
+	line-height: 33px;
+	text-align: center;
+	color:#cf3d14;
+	cursor: pointer;
+}
+.members-list tr:hover .member-func .member-recharge-btn{
+	display:inline-block;
+}
+	/*新增会员界面*/
+.add-member-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin-top: -240px;
+	margin-left:-355px;
+	width:710px;
+	height:480px;
+	z-index:1010;
+}
+.add-member-view .add-member-view-main{
+	position:relative;
+	width:710px;
+	height:420px;
+	background-color:#fcfcfc;
+}
+.add-member-view-main .title, .member-recharge-view-main .title{
+	font-size: 22px;
+	font-weight: bolder;
+	color:#333;
+	text-align: center;
+	height: 102px;
+	line-height: 102px;
+	user-select:none;
+	-moz-user-select:none;
+}
+.add-member-view-main .input-group, .member-recharge-view-main .input-group{
+	position:absolute;
+	height:42px;
+}
+.add-member-view-main .input-group label, .member-recharge-view-main .input-group label{
+	height:42px;
+	line-height: 42px;
+	font-size: 14px;
+	color:#333;
+}
+.add-member-view-main .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	width:170px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent:10px;
+}
+.add-member-view-main .member-name{
+	top:115px;
+	left:50px;
+}
+.add-member-view-main .member-tel{
+	top:173px;
+	left:50px;
+}
+.add-member-view-main .member-weixin{
+	top:231px;
+	left:50px;
+}
+.add-member-view-main .member-sex{
+	top:115px;
+	left:393px;
+}
+.add-member-view-main .member-sex .sex{
+	display: inline-block;
+	height:26px;
+	width:26px;
+	cursor: pointer;
+}
+.add-member-view-main .member-sex span i{
+	font-size: 20px;
+	color:#999999;
+}
+.add-member-view-main .member-sex .select i{
+	font-size: 26px;
+	color:#333333;
+}
+.add-member-view-main .member-birthday{
+	top:173px;
+	left:393px;
+}
+.add-member-view-main .member-class{
+	top:231px;
+	left:365px;
+}
+.add-member-view-main .member-class select{
+	box-sizing:border-box;
+	height:42px;
+	width:170px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent: 10px
+}
+.add-member-view .input-group .err{
+	line-height: 42px;
+	color:red;
+	font-size: 12px;
+}
+.add-member-view-main .new-member-btn-group, .member-recharge-view-main .member-recharge-btn-group{
+	position:absolute;
+	left:0;
+	bottom:56px;
+	height:40px;
+	width:100%;
+	text-align: center;
+}
+.add-member-view-main .new-member-btn-group a, .member-recharge-view-main .member-recharge-btn-group a{
+	display:inline-block;
+	height:40px;
+	width:72px;
+	line-height: 40px;
+	text-align: center;
+}
+.add-member-view-main .new-member-btn-group .sure, .member-recharge-view-main .member-recharge-btn-group .sure{
+	background-color:#cf3d14;
+	color:#fff;
+	margin-right: 28px;
+}
+.add-member-view-main .new-member-btn-group .cancel, .member-recharge-view-main .member-recharge-btn-group .cancel{
+	background-color:#cccccc;
+	color:#fff;
+}
+.add-member-view-close, .member-recharge-view-close{
+	position:absolute;
+	bottom: 0;
+	left:50%;
+	margin-left: -22px;
+}
+
+/*会员绑定二维码*/
+.member .code-image{
+	position:fixed;
+	z-index: 1020;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:rgba(44,50,62,.9);
+}
+.member .code-image .code-image-main{
+	position:absolute;
+	width:200px;
+	height:300px;
+	top:50%;
+	left:50%;
+	margin-top:-150px;
+	margin-left:-100px;
+}
+.member .code-image .code-image-main img{
+	width:200px;
+	height:200px;
+	vertical-align: middle;
+}
+.member .code-image .code-image-main .code-image-close{
+	position: absolute;
+	bottom:0;
+	left:50%;
+	margin-left: -22px;
+}
+
+/*会员详情界面*/
+.member-page-info{
+	width:1200px;
+	height: auto;
+	overflow: hidden;
+	padding:20px 0;
+}
+	/*会员基本信息*/
+.member-personal-info{
+	width:262px;
+	height:612px;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	background-color:#f1f1f1;
+	float:left;
+}
+.member-personal-info .member-head{
+	width:98px;
+	height:98px;
+	border-radius:100%;
+	border:4px solid #fff;
+	margin:43px auto 11px;
+	text-align:center;
+	line-height: 98px;
+}
+.member-personal-info .member-head i{
+	font-size: 70px;
+	color:#666;
+}
+.member-personal-info .member-name{
+	height:30px;
+	line-height: 30px;
+	color:#e79100;
+	font-size: 20px;
+	font-weight: bolder;
+	text-align: center;
+	margin-bottom: 3px;
+}
+.member-personal-info .member-sex, .member-personal-info .member-tel, .member-personal-info .member-money{
+	height:18px;
+	line-height: 18px;
+	font-size: 14px;
+	color:#333;
+	text-align: center;
+}
+.member-personal-info .member-tel{
+	margin-bottom: 16px;
+}
+.member-personal-info .member-other-info{
+	width:260px;
+	height:150px;
+	background-color:#e0e0e0;
+	padding:20px;
+	box-sizing:border-box;
+}
+.member-personal-info .member-other-info p{
+	height:26px;
+	line-height: 26px;
+	font-size: 14px;
+}
+.member-change-info-btn{
+	display:block;
+	width:242px;
+	height:43px;
+	line-height: 43px;
+	text-align: center;
+	font-size: 14px;
+	color:#fff;
+	background-color:#cf3d14;
+	margin:15px auto 0;
+}
+	/*会员充值消费记录*/
+.member-recharge-pay-info{
+	float:right;
+	width:930px;
+	height:auto;
+	border:1px solid #ccc;
+}
+.member-recharge-pay-info thead tr{
+	background-color:#fff;
+	border-bottom:1px solid #ccc;
+}
+.member-recharge-pay-info thead td{
+	height:58px;
+	font-weight: bolder;
+}
+.member-recharge-pay-info table td{
+	text-align: center;
+	vertical-align: middle;
+}
+.member-recharge-pay-info tbody td{
+	height:50px;
+}
+.member-recharge-pay-info tbody tr{
+	border-bottom: 1px solid #ccc;
+}
+.member-recharge-pay-info tbody tr:hover{
+	background-color:#f3d6ce;
+}
+.member-recharge-pay-info .item, .member-recharge-pay-info .money, .member-recharge-pay-info .type{
+	width:140px;
+}
+.member-recharge-pay-info .time, .member-recharge-pay-info .order{
+	width:255px;
+}
+
+/*会员充值界面*/
+.member-recharge-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin-top: -223px;
+	margin-left:-280px;
+	width:560px;
+	height:446px;
+	z-index:1010;
+}
+.member-recharge-view .member-recharge-view-main{
+	position:relative;
+	width:560px;
+	height:388px;
+	background-color:#fcfcfc;
+}
+.member-recharge-view-main .input-group p{
+	height:42px;
+	line-height: 42px;
+	color:#333;
+	font-size: 14px;
+}
+.member-recharge-view .member-number{
+	top:96px;
+	left:50px;
+}
+.member-recharge-view .member-name{
+	top:150px;
+	left:50px;
+}
+.member-recharge-view .member-class{
+	top:204px;
+	left:50px;
+}
+.member-recharge-view .member-money{
+	top:96px;
+	left:240px;
+}
+.member-recharge-view .member-recharge-type{
+	top:150px;
+	left:240px;
+}
+.member-recharge-view .member-recharge-money{
+	top:204px;
+	left:240px;
+}
+.member-recharge-view-main .input-group span{
+	padding-left: 10px;
+}
+.member-recharge-view-main .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	width:170px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent:10px;
+}
+.member-recharge-view-main .input-group select{
+	box-sizing:border-box;
+	height:42px;
+	width:170px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent:10px;
+}

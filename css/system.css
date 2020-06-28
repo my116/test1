@@ -1,0 +1,706 @@
+@charset "utf-8";
+
+/*system*/
+.system{
+	width:100%;
+	height:auto;
+	overflow:hidden;
+	padding:20px 0 40px;
+}
+/*侧边导航栏*/
+.system .system-sidebar{
+	float:left;
+	width:186px;
+	border:1px solid #ccc;
+	background-color:#eceaea;
+}
+.system-sidebar-list{
+	width:100%;
+}
+.system-sidebar-list li{
+	width:100%;
+	height:50px;
+	text-indent: 20px;
+	color: #333;
+	cursor:pointer;
+	font-weight: 900;
+}
+.system-sidebar-list li:hover{
+	background-color:#dbd8d8;
+}
+.system-sidebar-list li.selected{
+	color:#cf3d14;
+	background-color:#dbd8d8;
+}
+.system-sidebar-list li i{
+	font-size: 26px;
+	line-height: 50px;
+	margin-right: 15px;
+	float:left;
+	font-weight: normal;
+}
+.system-sidebar-list li span{
+	font-size: 14px;
+	line-height: 50px;
+	float:left;
+	text-indent:0;
+}
+
+/*内容区域*/
+.system .system-content{
+	float:right;
+	width:992px;
+}
+.system-content .wrap-box>.title{
+	width:100%;
+	height:16px;
+	padding-bottom:14px;
+	border-bottom:1px solid #ccc;
+	margin-bottom:20px;
+}
+.system-content .wrap-box .title p{
+	height:16px;
+	font-size: 12px;
+	color:#333;
+	border-left:3px solid #cf3d14;
+	text-indent: 6px;
+}
+/*平板管理板块*/
+.system-pad,
+.system-hand,
+.system-room,
+.system-user,
+.system-giving,
+.system-member,
+.system-goods{
+	width:100%;
+	height:auto;
+	overflow: hidden;
+}
+.system-pad .add-pad,
+.system-hand .add-hand,
+.system-user .add-user,
+.system-giving .add-giving,
+.system-member .add-member,
+.system-goods .add-goods{
+	display:block;
+	width:116px;
+	height:50px;
+	background-color:#e79100;
+	text-align: center;
+	line-height: 50px;
+	color:#fff;
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+.system-pad .pad-list,
+.system-hand .hand-list,
+.system-room .room-list,
+.system-user .user-list,
+.system-giving .giving-list,
+.system-member .member-list,
+.system-goods .goods-list{
+	width:100%;
+	font-size: 14px;
+}
+.system-pad .pad-list thead,
+.system-hand .hand-list thead,
+.system-room .room-list thead,
+.system-user .user-list thead,
+.system-giving .giving-list thead,
+.system-member .member-list thead,
+.system-goods .goods-list thead{
+	background-color:#fff;
+	border:1px solid #ccc;
+}
+.system-pad .pad-list thead td,
+.system-hand .hand-list thead td,
+.system-room .room-list thead td,
+.system-user .user-list thead td,
+.system-giving .giving-list thead td,
+.system-member .member-list thead td,
+.system-goods .goods-list thead td{
+	height:50px;
+	font-weight: bolder;
+}
+.system-pad .pad-list tbody td,
+.system-hand .hand-list tbody td,
+.system-room .room-list tbody td,
+.system-user .user-list tbody td,
+.system-giving .giving-list tbody td,
+.system-member .member-list tbody td,
+.system-goods .goods-list tbody td{
+	height:40px;
+}
+.system-pad .pad-list td,
+.system-hand .hand-list td,
+.system-room .room-list td,
+.system-user .user-list td,
+.system-giving .giving-list td,
+.system-member .member-list td,
+.system-goods .goods-list td{
+	text-align: center;
+	vertical-align: middle;
+}
+.system-pad .pad-list tbody tr,
+.system-hand .hand-list tbody tr,
+.system-room .room-list tbody tr,
+.system-user .user-list tbody tr,
+.system-giving .giving-list tbody tr,
+.system-member .member-list tbody tr,
+.system-goods .goods-list tbody tr{
+	border-bottom:1px solid #ccc;
+}
+.system-pad .pad-list tbody tr:hover,
+.system-hand .hand-list tbody tr:hover,
+.system-room .room-list tbody tr:hover,
+.system-user .user-list tbody tr:hover,
+.system-giving .giving-list tbody tr:hover,
+.system-member .member-list tbody tr:hover,
+.system-goods .goods-list tbody tr:hover{
+	background-color:#f7e9e4;
+}
+.system-pad .pad-list tbody td span,
+.system-hand .hand-list tbody td span,
+.system-room .room-list tbody td span,
+.system-user .user-list tbody td span,
+.system-giving .giving-list tbody td span,
+.system-member .member-list tbody td span,
+.system-goods .goods-list tbody td span{
+	display:none;
+	color:#cf3d14;
+	cursor:pointer;
+}
+.system-pad .pad-list tbody tr:hover span,
+.system-hand .hand-list tbody tr:hover span,
+.system-room .room-list tbody tr:hover span,
+.system-user .user-list tbody tr:hover span,
+.system-giving .giving-list tbody tr:hover span,
+.system-member .member-list tbody tr:hover span,
+.system-goods .goods-list tbody tr:hover span{
+	display:inline-block;
+}
+	/*增加平板界面*/
+.add-pad-view{
+	position:fixed;
+	width:420px;
+	height:400px;
+	top:50%;
+	left:50%;
+	margin-top:-200px;
+	margin-left:-210px;
+	z-index: 1010;
+}
+.add-pad-view .add-pad-view-main{
+	box-sizing:border-box;
+	width:100%;
+	height:340px;
+	position:relative;
+	background-color:#fcfcfc;
+}
+.add-pad-view-main .title{
+	height:90px;
+	line-height: 90px;
+	font-size: 22px;
+	color:#333;
+	font-weight: bolder;
+	text-align: center;
+}
+.add-pad-view-main .input-group{
+	width:100%;
+	height:42px;
+	margin-bottom: 15px;
+}
+.add-pad-view-main .input-group label{
+	display:inline-block;
+	width:90px;
+	text-align: right;
+	margin-right:15px;
+	line-height: 42px;
+	font-size: 14px;
+	color:#333;
+}
+.add-pad-view-main .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	width:180px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent:15px;
+	font-size: 14px;
+}
+.add-pad-view-main .input-group .err-info{
+	color:red;
+	font-size: 12px;
+	line-height: 42px;
+}
+.add-pad-view-main .btn-group{
+	position:absolute;
+	bottom:40px;
+	left:0;
+	height:42px;
+	width:100%;
+	text-align: center;
+}
+.add-pad-view-main .btn-group .sure{
+	display:inline-block;
+	height:42px;
+	width:90px;
+	background-color:#cf3d14;
+	line-height: 42px;
+	text-align: center;
+	color:#fff;
+	font-size: 14px;
+}
+.add-pad-view .add-pad-view-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+	/*删除平板界面*/
+.del-pad-view{
+	position: fixed;
+	width:400px;
+	height:320px;
+	top:50%;
+	left:50%;
+	margin-top:-160px;
+	margin-left: -200px;
+	z-index:1010;
+}
+.del-pad-view .del-pad-view-main{
+	position:relative;
+	width:100%;
+	height:260px;
+	box-sizing:border-box;
+	padding: 0 40px;
+	background-color:#fcfcfc;
+	overflow: hidden;
+}
+.del-pad-view .del-pad-view-main .info{
+	line-height:24px;
+	font-size: 18px;
+	color:#333;
+	text-align: center;
+	margin-top:66px;
+}
+.del-pad-view .del-pad-view-main .info span{
+	font-weight: bolder;
+}
+.del-pad-view .del-pad-view-main .btn-group,
+.system-hand .add-hand-view-main .btn-group,
+.system-room .edit-room-view-main .btn-group,
+.system-user .edit-user-view-main .btn-group,
+.system-giving .add-giving-view-main .btn-group,
+.system-member .edit-member-view-main .btn-group{
+	position:absolute;
+	bottom:40px;
+	left:0;
+	width:100%;
+	height:42px;
+	text-align: center;
+}
+.del-pad-view .del-pad-view-main .btn-group .sure,
+.system-hand .add-hand-view-main .btn-group .sure,
+.system-room .edit-room-view-main .btn-group .sure,
+.system-user .edit-user-view-main .btn-group .sure,
+.system-giving .add-giving-view-main .btn-group .sure,
+.system-member .edit-member-view-main .btn-group .sure{
+	display:inline-block;
+	height:42px;
+	width:90px;
+	background-color:#cf3d14;
+	line-height: 42px;
+	text-align: center;
+	color:#fff;
+	font-size: 14px;
+}
+.system-pad .del-pad-view .del-pad-view-close,
+.system-room .edit-room-view .edit-room-view-close,
+.system-user .edit-user-view .edit-user-view-close,
+.system-giving .add-giving-view .add-giving-view-close,
+.system-member .edit-member-view .edit-member-view-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+
+/*增加手牌界面*/
+.system-hand .add-hand-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin-top: -195px;
+	margin-left:-210px;
+	width:420px;
+	height:390px;
+	z-index:1010;
+}
+.system-hand .add-hand-view .add-hand-view-main{
+	position:relative;
+	width:100%;
+	height:330px;
+	box-sizing:border-box;
+	padding: 0 40px;
+	background-color:#fcfcfc;
+	overflow: hidden;
+}
+.system-hand .add-hand-way{
+	position:absolute;
+	width:248px;
+	height:47px;
+	top:34px;
+	left:50%;
+	margin-left:-124px;
+}
+.system-hand .add-hand-way li{
+	width:96px;
+	font-size:20px;
+	height:44px;
+	line-height: 44px;
+	text-align:center;
+	color:#333;
+	cursor:pointer;
+}
+.system-hand .add-hand-way li.selected{
+	border-bottom:3px solid #cf3d14;
+}
+.system-hand .add-hand-way li:nth-of-type(1){
+	float:left;
+}
+.system-hand .add-hand-way li:nth-of-type(2){
+	float:right;
+}
+.system-hand .add-hand-view-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+.system-hand .add-hand-way-content{
+	width: 100%;
+	height:170px;
+	position:absolute;
+	top:80px;
+	left:0;
+	right:0;
+}
+.system-hand .add-hand-way-content .lot{
+	margin-top: 37px;
+}
+.system-hand .add-hand-way-content .single{
+	margin-top:58px;
+}
+.system-hand .add-hand-way-content .input-group{
+	width:290px;
+	height:42px;
+	margin:0 auto 16px;
+}
+.system-hand .add-hand-way-content .input-group label{
+	line-height: 42px;
+	font-size: 14px;
+	color:#333;
+	float:left;
+}
+.system-hand .add-hand-way-content .input-group input{
+	box-sizing:border-box;
+	width:218px;
+	height:42px;
+	border:1px solid #ccc;
+	text-indent: 15px;
+	font-size: 14px;
+	background-color: #fff;
+	float:right;
+}
+
+/*编辑房间信息*/
+.system-room .edit-room-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:420px;
+	height:400px;
+	margin-top:-200px;
+	margin-left:-210px;
+	z-index:1010;
+}
+.system-room .edit-room-view-main{
+	position: relative;
+	width: 100%;
+	height:340px;
+	background-color:#fcfcfc;
+	overflow: hidden;
+}
+.system-room .edit-room-view-main .title{
+	height:30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 22px;
+	color:#333;
+	margin:25px 0;
+}
+.system-room .edit-room-view-main .input-group{
+	width:290px;
+	height:42px;
+	margin:0 auto 16px;
+}
+.system-room .edit-room-view-main .input-group .left{
+	float:left;
+}
+.system-room .edit-room-view-main .input-group .right{
+	float:right;
+}
+.system-room .edit-room-view-main .input-group .left p{
+	font-size: 14px;
+	line-height: 42px;
+}
+.system-room .edit-room-view-main .input-group .right input,
+.system-room .edit-room-view-main .input-group .right select{
+	box-sizing:border-box;
+	width:218px;
+	height:42px;
+	border:1px solid #ccc;
+	text-indent: 15px;
+	font-size: 14px;
+	background-color: #fff;
+}
+
+/*账号设置*/
+.system-user .user-list .func{
+	width: 95px;
+}
+.system-user .edit-user-content{
+	width:500px;
+	margin:0 auto;
+	overflow: hidden;
+}
+.system-user .edit-user-content .left{
+	width:250px;
+	overflow: hidden;
+	float:left;
+}
+.system-user .edit-user-content .left .input-group{
+	height:42px;
+	width: 100%;
+	margin-bottom: 16px;
+}
+.system-user .edit-user-content .left .input-group label{
+	line-height: 42px;
+	font-size: 14px;
+	width:55px;
+	display:inline-block;
+}
+.system-user .edit-user-content .left .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	border:1px solid #ccc;
+	text-indent:15px;
+	background-color: #fff;
+}
+.system-user .edit-user-content .left .code input{
+	width:100px;
+}
+.system-user .edit-user-content .left .code a{
+	display: inline-block;
+    width: 50px;
+    height: 42px;
+    color: #fff;
+    background: #e79100;
+    float: right;
+    font-size: 14px;
+    text-align: center;
+    line-height: 42px;
+    margin-right: 14px;
+}
+.system-user .edit-user-content .left .code .unable{
+	background-color: #b1b1b1;
+	cursor:not-allowed;
+}
+.system-user .edit-user-content .right{
+	width:250px;
+	overflow: hidden;
+	float:right;
+}
+.system-user .edit-user-content .right .item{
+	width:100px;
+	margin: 0 auto;
+	text-indent: 0;
+	font-size:14px;
+}
+.system-user .edit-user-content .right .item span{
+	position:relative;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	top:4px;
+	margin-right: 5px;
+	cursor:pointer;
+	text-indent:0;
+}
+.system-user .edit-user-content .right .item span i{
+	display:none;
+	position:absolute;
+	font-size: 17px;
+	top:-2px;
+	left:-1px;
+}
+.system-user .edit-user-content .right .item .selected i{
+	display:inline-block;
+}
+	/*二维码*/
+.system-user .code-image{
+	position: fixed;
+    z-index: 1020;
+    width: 200px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -100px;
+}
+.system-user .code-image img{
+	width: 200px;
+	height: 200px;
+	vertical-align: middle;
+}
+.system-user .code-image .image-close{
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -22px;
+}
+
+/*会员充值优惠*/
+.system-giving .add-giving-view, .system-user .edit-user-view{
+	position:fixed;
+	width:550px;
+	height:450px;
+	top:50%;
+	left:50%;
+	margin-top:-225px;
+	margin-left:-275px;
+	z-index: 1010;
+}
+.system-giving .add-giving-view-main, .system-user .edit-user-view-main{
+	position:relative;
+	width:100%;
+	height:390px;
+	background-color: #fcfcfc;
+	overflow: hidden;
+}
+.system-giving .add-giving-view-main .title,
+.system-member .edit-member-view-main .title,
+.system-user .edit-user-view-main .title{
+	font-size: 22px;
+	text-align: center;
+	height:30px;
+	line-height: 30px;
+	margin:40px 0 36px 0;
+}
+.system-giving .add-giving-view-main .input-group{
+	height:42px;
+	width: 100%;
+	text-indent: 60px;
+	margin-bottom: 16px;
+}
+.system-giving .add-giving-view-main .input-group label{
+	line-height: 42px;
+	font-size: 14px;
+	margin-right:16px;
+}
+.system-giving .add-giving-view-main .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	border:1px solid #ccc;
+	text-indent:15px;
+	background-color: #fff;
+}
+.system-giving .add-giving-view-main .money input{
+	width: 110px;
+	margin-right:55px;
+}
+.system-giving .add-giving-view-main .expiry-date input{
+	width:144px;
+	background:url(/Public/Home/images/timeicon_03.png) no-repeat 112px 10px;
+	background-color: #fff;
+	margin-right:15px;
+}
+.system-giving .discount .item{
+	display:inline-block;
+	margin-right: 10px;
+	text-indent: 0;
+	font-size:14px;
+}
+.system-giving .discount span{
+	position:relative;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	top:4px;
+	margin-right: 5px;
+	cursor:pointer;
+	text-indent:0;
+}
+.system-giving .discount span i{
+	display:none;
+	position:absolute;
+	font-size: 17px;
+	top:-2px;
+	left:-1px;
+}
+.system-giving .discount .selected i{
+	display:inline-block;
+}
+
+/*会员等级*/
+.system-member .member-list .func{
+	width: 95px;
+}
+.system-member .edit-member-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:350px;
+	height:350px;
+	margin-top:-175px;
+	margin-left: -175px;
+	z-index: 1010;
+}
+.system-member .edit-member-view-main{
+	position:relative;
+	width:100%;
+	height:290px;
+	background-color: #fcfcfc;
+	overflow: hidden;
+}
+.system-member .edit-member-view-main .input-group{
+	height:42px;
+	width: 100%;
+	text-indent: 40px;
+	margin-bottom: 16px;
+}
+.system-member .edit-member-view-main .input-group label{
+	height: 42px;
+	line-height: 42px;
+	margin-right:16px;
+	font-size: 14px;
+}
+.system-member .edit-member-view-main .input-group input{
+	box-sizing:border-box;
+	height:42px;
+	width:160px;
+	border:1px solid #ccc;
+	text-indent:15px;
+	background-color: #fff;
+}
+
+/*商品分类*/
+.system-goods .goods-list .func{
+	width:95px;
+}

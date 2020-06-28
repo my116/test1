@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="full-screen" content="yes">
+	<script type="text/javascript">
+		var dpr, rem, scale;
+		var docEl = document.documentElement;
+		var fontEl = document.createElement('style');
+		var metaEl = document.querySelector('meta[name="viewport"]');
+		dpr = window.devicePixelRatio || 1;
+		rem = docEl.clientWidth * dpr / 10;
+		scale = 1 / dpr;
+		metaEl.setAttribute('content', 'width=' + dpr * docEl.clientWidth + ',initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale + ',user-scalable=no');
+		docEl.setAttribute('data-dpr', dpr);
+		docEl.firstElementChild.appendChild(fontEl);
+		fontEl.innerHTML = 'html{font-size:' + rem + 'px!important;}';
+		window.rem2px = function(v) {
+		    v = parseFloat(v);
+		    return v * rem;
+		};
+		window.px2rem = function(v) {
+		    v = parseFloat(v);
+		    return v / rem;
+		};
+		window.dpr = dpr;
+		window.rem = rem;
+	</script>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<title>消费明细单</title>
+	<style>
+	body,button,input,select,textarea{font:100%/1 "Helvetica Neue",Helvetica,STHeiTi,"Microsoft YaHei";}
+	body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,article,aside,footer,header,hgroup,nav,section,menu{margin:0; padding:0;-webkit-text-size-adjust:100%;}
+	table{border-collapse:collapse;border-spacing:0;}
+	em,i{font-style:normal;}
+	li{list-style:none;}
+	img{border:0;}
+	input,img{vertical-align:middle;}
+	article,aside,footer,header,hgroup,nav,section,menu{display:block;}
+	a{text-decoration:none;}
+	.clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+	html,body{height:100%;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;color: #666666;}
+	a,input,textarea{outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0);tap-highlight-color:rgba(0,0,0,0); -webkit-font-smoothing:antialiased;}
+
+	html{background:#ededed;}
+	.c_wrap{width:100%;height:100%;margin:0 auto;overflow: hidden;}
+	.c_wrap .pay-main{width:100%;overflow: hidden;background:#ededed;z-index: 100;position:fixed;top:0;}
+	.c_wrap .pay-id{font-size: 0.36rem;color:#000;text-align: center;line-height: 0.96rem;height: 0.96rem;}
+	.c_wrap .pay-money{font-size: 0.906667rem;text-align: center;height:0.906667rem;color:#000;font-weight: bolder;}
+	.c_wrap .pay-money span{color:#000;}
+	.c_wrap .pay-btn{display:block;width:9.066667rem;height:1.066667rem;background:#1aad19;text-align: center;line-height: 1.066667rem;font-size: 0.4rem;color:#fff;margin:0.413333rem auto;}
+	.c_wrap .pay-btn:active{background:#148c13;}
+	.c_wrap .pay-info{display:block;width:100%;font-size: 0.293333rem;text-align: center;text-decoration: underline;color:#333;margin-bottom: 0.266667rem;}
+	.c_wrap .pay-info-content{width: 100%;height:100%;position:fixed;top:0;bottom:0;left:0;right:0;padding-top: 4.326667rem;overflow-y: scroll;display:none;}
+	.c_wrap .row{width:9.066667rem;margin:0 auto;overflow: hidden;}
+	.c_wrap .row .goods-name{width:7.933333rem;float:left;font-size: 0.4rem;line-height: 0.586667rem;}
+	.c_wrap .row .goods-number{width:1.066667rem;float:right;line-height: 0.586667rem;font-size:0.4rem;text-align: center;}
+	.c_wrap .row .goods-time{width:2.733333rem;float: left;line-height: 0.586667rem;font-size: 0.4rem;}
+	.c_wrap .row .goods-price{width:3.133333rem;text-align: center;line-height: 0.586667rem;font-size: 0.4rem;float: left;}
+	.c_wrap .row .goods-subtotal{width:3.133333rem;text-align: right;line-height: 0.586667rem;font-size: 0.4rem;float: left;}
+	.c_wrap .hand-name{line-height: 0.586667rem;font-size: 0.4rem;margin-left: 0.466667rem;}
+	.c_wrap .hand-name span{line-height: 0.586667rem;font-size: 0.4rem;}
+	.c_wrap .hand-info{width:9.066667rem;border:1px solid #000;border-radius:10px;overflow: hidden;padding:0.133333rem 0;background-color: #fff;box-sizing:border-box;margin: 0 auto 0.266667rem;}
+	.c_wrap .pay-info-content .hand-info:last-child{margin-bottom: 4.62rem;}
+	</style>
+</head>
+<body>
+	<div class="c_wrap">
+		<div class="pay-main">
+			<p class="pay-id">流水号：<span>233452243486</span></p>
+			<p class="pay-money">￥<span>12,020.00</span></p>
+			<a class="pay-btn" id="pay_btn" href="javascript:;">立即支付</a>
+			<a class="pay-info" id="pay_info" href="javascript:;">查看详情</a>
+		</div>
+		
+		<div class="pay-info-content" id="pay_info_content">
+			<div class="row">
+				<p class="goods-name">消费名称</p>
+				<p class="goods-number">数量</p>
+			</div>
+			<div class="row">
+				<p class="goods-time">消费时间</p>
+				<p class="goods-price">原价/会员价</p>
+				<p class="goods-subtotal">小计</p>
+			</div>
+			<p class="hand-name">手牌号：<span>0030</span></p>
+			<div class="hand-info">
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">12800.00</span> / <span class="vip-price">11800.00</span></p>
+					<p class="goods-subtotal"><span>12800.00</span> / <span>11800.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+			</div>
+
+			<p class="hand-name">手牌号：<span>0030</span></p>
+			<div class="hand-info">
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">12800.00</span> / <span class="vip-price">11800.00</span></p>
+					<p class="goods-subtotal"><span>12800.00</span> / <span>11800.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+			</div>
+
+			<p class="hand-name">手牌号：<span>0030</span></p>
+			<div class="hand-info">
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">12800.00</span> / <span class="vip-price">11800.00</span></p>
+					<p class="goods-subtotal"><span>12800.00</span> / <span>11800.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+			</div>
+
+			<p class="hand-name">手牌号：<span>0030</span></p>
+			<div class="hand-info">
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">12800.00</span> / <span class="vip-price">11800.00</span></p>
+					<p class="goods-subtotal"><span>12800.00</span> / <span>11800.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+			</div>
+
+			<p class="hand-name">手牌号：<span>0030</span></p>
+			<div class="hand-info">
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">12800.00</span> / <span class="vip-price">11800.00</span></p>
+					<p class="goods-subtotal"><span>12800.00</span> / <span>11800.00</span></p>
+				</div>
+
+				<div class="row">
+					<p class="goods-name">泰式按摩</p>
+					<p class="goods-number">×1</p>
+				</div>
+				<div class="row">
+					<p class="goods-time">16/03/23 13:34</p>
+					<p class="goods-price"><span class="regular-price">128.00</span> / <span class="vip-price">118.00</span></p>
+					<p class="goods-subtotal"><span>128.00</span> / <span>118.00</span></p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#pay_btn').click(function(){
+			alert("立即支付");
+		})
+		$('#pay_info').click(function(){
+			$('#pay_info_content').css({'display':'block'});
+		})
+	})
+	</script>
+</body>
+</html>

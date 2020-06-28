@@ -1,0 +1,1553 @@
+@charset "utf-8";
+
+/*cashier*/
+.cashier{
+	width:100%;
+	height:auto;
+	overflow: hidden;
+}
+/*room-page-index*/
+.cashier .room-page-index, .cashier .room-page-occupy{
+	width:100%;
+	overflow: hidden;
+}
+/*.cashier .title{
+	height: 18px;
+	line-height: 18px;
+	font-size: 18px;
+	font-weight:normal;
+	padding: 38px 0 22px;
+	margin:0;
+	color:#333333;
+}*/
+.cashier .room{
+	width: 100%;
+	margin-top:44px;
+	margin-bottom: 44px;
+}
+.cashier .room td{
+	position:relative;
+	width:133px;
+	height:73px;
+	border:1px solid #d2d2d2;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	font-size: 14px;
+}
+.cashier .room .roomState1{
+	color:#72962c;
+}
+.cashier .room .roomState2{
+	color:#cf3d14;
+}
+.cashier .room .roomState3{
+	color:#e79100;
+}
+.cashier .room .roomState1 .room-number, .cashier .room .roomState2 .room-number, .cashier .room .roomState3 .room-number{
+	font-weight: bolder;
+	position:absolute;
+	top:15px;
+	left:55px;
+	display:block;
+	width:70px;
+	text-align: center;
+}
+.cashier .room .roomState1 .room-info, .cashier .room .roomState2 .room-info, .cashier .room .roomState3 .room-info{
+	position:absolute;
+	top:36px;
+	left:68px;
+	font-weight: bolder;
+}
+.cashier .room .iconfont{
+	font-size: 50px;
+	position:absolute;
+	top:7px;
+	left:10px;
+}
+.cashier .room .room-hover{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.cashier .room .room-hover:hover{
+	background-color:rgba(44,50,62,.9);
+}
+.cashier .room .room-hover li{
+	width:100%;
+	height:50%;
+	line-height: 36px;
+	font-size: 14px;
+	color:#fff;
+	user-select:none;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+}
+.cashier .room .room-hover li:hover{
+	background-color:rgba(44,50,62,1);
+	color:#cf3d14;
+}
+.cashier .room .room-occupy{
+	margin-top: 18px;
+}
+.cashier .handle{
+	width:100%;
+	height:36px;
+	text-align: center;
+	margin-bottom: 58px;
+}
+.cashier .handle a{
+	display:inline-block;
+	width:104px;
+	height:36px;
+	font-size: 16px;
+	line-height: 36px;
+	color:#fff;
+	border-radius: 18px;
+	background-color:#ccc;
+	margin-right: 15px;
+	transition:all .3s;
+	user-select:none;
+	-moz-user-select:none;
+}
+.cashier .handle a:hover{
+	background-color:#cf3d14;
+}
+
+/*预约房间界面*/
+.cashier .room-appointment, .cashier .room-using{
+	position:fixed;
+	z-index:1010;
+	top:50%;
+	left:50%;
+	margin-left: -459px;
+	margin-top: -281px;
+	width:918px;
+	height:561px;
+	opacity: 1;
+	transition:all .3s;
+}
+.cashier .ng-hide{
+	opacity:0;
+}
+.cashier .room-appointment-main, .cashier .room-using-main{
+	position:relative;
+	width:100%;
+	height:434px;
+	background-color:#fafafb;
+	box-sizing:border-box;
+	padding:0px 30px 25px;
+}
+.cashier .room-appointment-title, .cashier .room-using-title{
+	height:68px;
+	line-height: 68px;
+	font-size: 22px;
+	color:#333;
+	margin-bottom: 10px;
+}
+.cashier .room-appointment-title p, .cashier .room-using-title p{
+	text-align: center;
+}
+.cashier .room-appointment-title span, .cashier .room-using-title span{
+	font-size: 20px;
+}
+.appointment-form-group{
+	width:440px;
+	height:56px;
+}
+.using-form-group{
+	width:100%;
+	height:44px;
+}
+.appointment-form-group .appointment-err, .using-form-group .using-err{
+	color:red;
+	line-height:44px;
+	font-size: 12px;
+}
+.appointment-form-group label, .using-form-group label{
+	height:44px;
+	line-height: 44px;
+	font-size: 16px;
+	color: #333;
+	margin-right: 20px;
+}
+.appointment-form-group input, .using-form-group input{
+	width:226px;
+	height:36px;
+	border:1px solid #ccc;
+	outline: none;
+	text-indent: 10px;
+}
+.appointment-remark{
+	position:absolute;
+	top:80px;
+	left:480px;
+	width:405px;
+	height:205px;
+}
+.appointment-remark label{
+	height:44px;
+	line-height: 44px;
+	font-size: 16px;
+	color: #333;
+	margin-right: 20px;
+}
+.appointment-remark textarea{
+	float:right;
+	width:320px;
+	height:158px;
+	border:1px solid #ccc;
+	resize:none;
+	padding:10px;
+}
+.appointment-marked-words{
+	position:absolute;
+	top:245px;
+	left:125px;
+	font-size: 12px;
+	color:#d58a47;
+}
+/*预约界面中预约和取消按钮*/
+.appointment-btn-group, .using-btn-group{
+	position:absolute;
+	bottom:25px;
+	left:0px;
+	display:inline-block;
+	height:34px;
+	width:100%;
+	text-align: center;
+}
+.appointment-btn-group{
+	bottom:75px;
+}
+.appointment-btn-group a, .using-btn-group a{
+	display:inline-block;
+	width:91px;
+	height:34px;
+	line-height: 34px;
+	border-radius: 17px;
+}
+.appointment-btn-group .appointment-sure, .using-btn-group .using-sure{
+	background-color:#cf3d14;
+	color:#fff;
+	transition:all .3s;
+	margin-right: 20px;
+}
+.appointment-btn-group .appointment-sure:hover, .using-btn-group .using-sure:hover{
+	background-color: #80260d;
+}
+.appointment-btn-group .appointment-cancel, .using-btn-group .using-cancel{
+	background-color:#ddd;
+	color:#333;
+	transition:all .3s;
+}
+.appointment-btn-group .appointment-cancel:hover, .using-btn-group .using-cancel:hover{
+	background-color: #808080;
+}
+/*预约界面X按钮*/
+.room-appointment .room-appointment-close, .room-using .room-using-close{
+	position:absolute;
+	bottom:65px;
+	left:437px;
+}
+
+/*开房间界面*/
+.room-using .btn-add-userhand{
+	display: inline-block;
+	height:38px;
+	width: 50px;
+	text-align: center;
+	line-height: 40px;
+	border:1px solid #ccc;
+	font-size: 14px;
+	margin:0 20px;
+	color:#333;
+	transition:all .3s;
+}
+.room-using .btn-add-userhand:hover{
+	color:#fff;
+	background-color:#e39700;
+}
+.room-using .using-marked-words{
+	font-size: 12px;
+	color:#d58a47;
+	margin-bottom: 10px;
+}
+.room-using .using-userhands{
+	width:100%;
+	height:210px;
+	border:1px solid #ccc;
+	overflow: auto;
+}
+.room-using .using-userhands-list{
+	width:100%;
+	overflow:auto;
+}
+.room-using .using-userhands-list-title td{
+	height:48px;
+	font-size: 18px;
+	color:#333;
+	background-color:#e3e3e3;
+}
+.room-using .using-userhands-list tr{
+	width:100%;
+}
+.room-using .using-userhands-list td{
+	width:50%;
+	text-align: center;
+	vertical-align:middle;
+	height:38px;
+	border-bottom:1px solid #ccc;
+	font-size: 14px;
+}
+.room-using .using-userhands-list td .userhand-delete{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	border-radius: 100%;
+	color:#fff;
+	font-size: 14px;
+	font-weight: bolder;
+	cursor: pointer;
+	margin-left:20px;
+	background-color:#ccc;
+	transition:all .3s;
+}
+.room-using .using-userhands-list td .userhand-delete:hover{
+	color:#fff;
+	background-color:red;
+}
+
+/*房间预约详情弹窗界面*/
+.cashier .appointment-info-view{
+	position:fixed;
+	z-index: 1010;
+	width:534px;
+	height:600px;
+	top:50%;
+	left:50%;
+	margin-top:-300px;
+	margin-left:-267px;
+}
+.appointment-info-view .appointment-info-view-main{
+	position:relative;
+	box-sizing:border-box;
+	width:100%;
+	height:524px;
+	padding:0 40px 40px 40px;
+	background-color: #fafafb;
+}
+.appointment-info-view .appointment-info-view-main .title{
+	height: 96px;
+	line-height: 96px;
+	text-align: center;
+	font-size: 22px;
+	font-weight: bolder;
+}
+.appointment-info-view .appointment-info-view-main .title span{
+	font-weight: normal;
+}
+.appointment-info-view .input-group{
+	width:454px;
+	height:auto;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.appointment-info-view .input-group .left{
+	width:95px;
+	padding-right: 15px;
+	box-sizing:border-box;
+	text-align: right;
+	float:left;
+}
+.appointment-info-view .input-group .left label{
+	font-size: 16px;
+	color:#333;
+	line-height: 42px;
+}
+.appointment-info-view .input-group .right{
+	float:left;
+}
+.appointment-info-view .input-group .right input{
+	box-sizing:border-box;
+	height:42px;
+	width:260px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	text-indent:15px;
+	font-size: 16px;
+}
+.appointment-info-view .input-group .right textarea{
+	width:260px;
+	height:120px;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	resize:none;
+	padding:10px; 
+}
+.appointment-info-view-main .btn-group{
+	height:36px;
+	width:100%;
+	text-align: center;
+	position:absolute;
+	bottom:40px;
+	left:0;
+}
+.appointment-info-view-main .btn-group .sure{
+	display:inline-block;
+	width:80px;
+	height:36px;
+	line-height: 36px;
+	background-color:#cf3d14;
+	color:#fff;
+	font-size: 12px;
+	margin-right:15px;
+	text-align: center;
+}
+.appointment-info-view-main .btn-group .cancel{
+	display:inline-block;
+	width:80px;
+	height:36px;
+	line-height: 36px;
+	background-color:#dddddd;
+	color:#333;
+	font-size: 12px;
+	text-align: center;
+}
+.appointment-info-view .appointment-info-view-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+.cashier .room-page-index .mask-layer{
+	z-index:1030;
+}
+/*取消房间预约确定界面*/
+.cancel-room-appointment-view .cancel-room-appointment-close{
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -22px;
+}
+
+/*room-page-occupy房间占用详情*/
+.room-page-occupy .occupy-room-number{
+	height:65px;
+	line-height: 65px;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bolder;
+	color:#666;
+}
+.room-page-occupy .occupy-userhands{
+	width:100%;
+	height:88px;
+	background-color:#fff;
+}
+.room-page-occupy .occupy-userhands .userhand-selected{
+	box-shadow: 0 0 1px 2px #e79100 inset;
+}
+.room-page-occupy .occupy-userhands dl{
+	width:88px;
+	height:88px;
+	float:left;
+	cursor: pointer;
+}
+.room-page-occupy .occupy-userhands dl:hover{
+	background-color:#eee;
+}
+.room-page-occupy .occupy-userhands dl dt{
+	height:54px;
+	width:100%;
+	text-align: center;
+	font-size: 40px;
+	color:#e79100;
+}
+.room-page-occupy .occupy-userhands dl dt .iconfont{
+	font-size: 40px;
+}
+.room-page-occupy .occupy-userhands dl dd{
+	height:34;
+	width:100%;
+	text-align: center;
+}
+.room-page-occupy .occupy-btn-group{
+	width:100%;
+	height:36px;
+	text-align: center;
+	margin:30px 0;
+}
+.room-page-occupy .occupy-btn-group a{
+	display: inline-block;
+	width:104px;
+	height:36px;
+	line-height: 36px;
+	margin-right: 20px;
+	border-radius: 18px;
+	background-color:#ccc;
+	color:#fff;
+	font-size: 16px;
+	text-align: center;
+	transition:all .3s;
+}
+.room-page-occupy .occupy-btn-group .unable-click{
+	cursor:not-allowed;
+}
+.room-page-occupy .occupy-btn-group .unable-click:hover{
+	background-color: #ccc;
+}
+.room-page-occupy .occupy-btn-group a:hover{
+	background-color:#cf3d14;
+}
+.room-page-occupy .occupy-consumption-title{
+	width:100%;
+	height:56px;
+	line-height: 56px;
+	font-size: 18px;
+	font-weight: bolder;
+	text-align: center;
+	color:#666;
+}
+.room-page-occupy .occupy-room-start-time{
+	width: 100%;
+	height:42px;
+	color:#666;
+	font-size: 12px;
+}
+.room-page-occupy .occupy-room-start-time span{
+	color:#e79100;
+}
+.room-page-occupy .occupy-consumption-list{
+	width:100%;
+	height:auto;
+	/*min-height: 460px;*/
+	margin-bottom: 60px;
+}
+.room-page-occupy .occupy-consumption-list thead tr{
+	width:100%;
+	height:54px;
+	background-color:#f0eded;
+}
+.room-page-occupy .occupy-consumption-list tbody tr{
+	width:100%;
+	height:47px;
+	background-color:#fff;
+	border-bottom:1px solid #ccc;
+}
+.occupy-consumption-list td{
+	text-align: center;
+	vertical-align: middle;
+}
+.occupy-consumption-list tbody td{
+	height:47px;
+	font-size: 14px;
+}
+.occupy-consumption-list tbody .giveup td{
+	color:red;
+}
+.occupy-consumption-list thead .hand-number{
+	width:120px;
+}
+.occupy-consumption-list tbody .hand-number{
+	width:110px;
+}
+.occupy-consumption-list thead .goods-subtotal{
+	width:160px;
+}
+.occupy-consumption-list tbody .goods-subtotal{
+	width:150px;
+}
+.occupy-consumption-list .goods-name{
+	width:400px;
+}
+.occupy-consumption-list .goods-price{
+	width:160px;
+}
+.occupy-consumption-list .goods-number{
+	width:160px;
+}
+.occupy-consumption-list .buy-time{
+	width:200px;
+}
+/*调换房间界面*/
+.change-room-view{
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:334px;
+	height:304px;
+	margin-left:-167px;
+	margin-top:-152px;
+	z-index:1010;
+}
+.change-room-main{
+	position: relative;
+	box-sizing:border-box;
+	width:100%;
+	height:236px;
+	padding: 40px;
+	background-color:#fcfcfc;
+}
+.change-room-main .input-group{
+	height:40px;
+	line-height: 40px;
+	color:#333;
+	font-size: 16px;
+}
+.change-room-main .change-room-err{
+	position:absolute;
+	top:115px;
+	left:110px;
+	font-size: 12px;
+	color:red;
+}
+.change-room-main .input-group input{
+	height:34px;
+}
+.change-room-main .input-group select{
+	height:38px;
+}
+.change-room-main .btn-group{
+	position:absolute;
+	left:0;
+	right:0;
+	text-align: center;
+	bottom:40px;
+}
+.change-room-main .btn-group a{
+	display:inline-block;
+	width:68px;
+	height:38px;
+	margin-right: 10px;
+	font-size: 13px;
+	line-height: 38px;
+	text-align: center;
+	transition:all .3s;
+}
+.change-room-main .btn-group .btn-sure{
+	border:1px solid #fff;
+	background-color:#cf3d14;
+	color:#fff;
+}
+.change-room-main .btn-group .btn-sure:hover{
+	background-color:#80260d;
+}
+.change-room-main .btn-group .btn-cancel{
+	border:1px solid #cf3d14;
+	background-color:#ddd;
+	color:#cf3d14;
+}
+.change-room-main .btn-group .btn-cancel:hover{
+	background-color:#808080;
+}
+.change-room-view-close{
+	position: absolute;
+	left:50%;
+	margin-left:-22px;
+	bottom: 0;
+}
+
+/*退单界面*/
+.cashier .chargeback, .cashier .roompay{
+	position:fixed;
+	width:1150px;
+	height:600px;
+	top:50%;
+	left:50%;
+	margin-top:-300px;
+	margin-left:-575px;
+	z-index:1010;
+}
+.chargeback .chargeback-main, .roompay .roompay-main{
+	width:100%;
+	height:530px;
+	box-sizing:border-box;
+	padding:25px;
+	background-color:#f7f7f7;
+}
+.chargeback .chargeback-main .title{
+	height:46px;
+	line-height: 46px;
+	font-size: 22px;
+	font-weight: bolder;
+	color:#333;
+	text-align: center;
+}
+.chargeback .chargeback-main .input-group{
+	height:42px;
+	margin:25px 0;
+	position: relative;
+}
+.chargeback-main .input-group label{
+	height:42px;
+	line-height: 42px;
+}
+.chargeback-main .input-group .chargeback-handid{
+	height:38px;
+	outline: 0;
+	border:1px solid #ccc;
+	text-indent: 10px;
+}
+.chargeback-main .input-group .chargeback-search{
+	display:inline-block;
+	width:55px;
+	height:42px;
+	box-sizing:border-box;
+	line-height: 42px;
+	border:1px solid #ccc;
+	transition:all .3s;
+	font-size: 14px;
+	text-align: center;
+	color:#333;
+	margin-left: 15px;
+}
+.chargeback-main .input-group .chargeback-search:hover{
+	background-color:#e39700;
+	color:#fff;
+}
+/*可退单的选择列表*/
+.chargeback-main .input-group .select-list{
+	position:absolute;
+	top:42px;
+	left:104px;
+	width:100px;
+	max-height: 200px;
+	border:1px solid #ccc;
+	overflow: auto;
+}
+.chargeback-main .input-group .select-list ul{
+	width:100%;
+}
+.chargeback-main .input-group .select-list ul li{
+	font-size: 14px;
+	line-height: 22px;
+	background-color:#fff;
+	padding-left:10px;
+	cursor:pointer;
+}
+.chargeback-main .input-group .select-list ul li:hover{
+	background-color:#ccc;
+	color:#fff;
+}
+/*退单界面消费详情表格*/
+.chargeback-main .chargeback-list-thead{
+	width:100%;
+	height:50px;
+	background-color:#eaeaea;
+}
+.chargeback-main .chargeback-list-thead table{
+	width:1080px;
+}
+.chargeback-main .chargeback-list{
+	width:100%;
+	height:285px;
+	background-color: #fff;
+	overflow: auto;
+}
+.chargeback-main .chargeback-list table{
+	width:100%;
+	border-bottom: 1px solid #ccc;
+}
+.chargeback-main .chargeback-list-thead tr{
+	height:50px;
+}
+.chargeback-main .chargeback-list-thead td{
+	height:50px;
+	line-height: 50px;
+}
+.chargeback-main .chargeback-list td{
+	font-size: 14px;
+	color:#333;
+}
+.chargeback-main .chargeback-list tr{
+	height: 40px;
+}
+.chargeback-main .chargeback-list tr:hover{
+	background-color: #f3d6ce;
+}
+.chargeback-main .userhand, .chargeback-main .room-number,.chargeback-main .goods-price, .chargeback-main .goods-number, .chargeback-main .goods-subtotal{
+	width:100px;
+	text-align: center;
+	vertical-align: middle;
+}
+.chargeback-main .goods-name{
+	width:220px;
+	text-align: center;
+	vertical-align: middle;
+}
+.chargeback-main .goods-time{
+	width:220px;
+	text-align: center;
+	vertical-align: middle;
+}
+.chargeback-main .chargeback-func{
+	width:160px;
+	text-align: center;
+	vertical-align: middle;
+}
+.chargeback-main tr .chargeback-func span{
+	display:none;
+	width:50px;
+	height:28px;
+	border-radius: 7px;
+	background-color:#d03e16;
+	color:#fff;
+	font-size: 14px;
+	line-height: 28px;
+	cursor:pointer;
+}
+.chargeback-main tr:hover .chargeback-func span{
+	display:inline-block;
+}
+.chargeback .chargeback-close, .roompay .roompay-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+
+/*roompay 房间结账*/
+.roompay .roompay-main .title{
+	height:30px;
+	line-height: 30px;
+	font-size: 22px;
+	font-weight: bolder;
+	color:#333;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.roompay .roompay-consumption-info, .roompay .roompay-way{
+	width:540px;
+	height:430px;
+	border:1px solid #ccc;
+	background-color:#fff;
+}
+.roompay .roompay-consumption-info{
+	float:left;
+}
+.roompay .roompay-way{
+	float:right;
+}
+.roompay-consumption-info .input-group{
+	width:100%;
+	height:55px;
+	padding-top:15px;
+	position:relative;
+}
+.roompay-consumption-info .input-group label{
+	font-size: 14px;
+	color:#333;
+	margin:0 10px 0 20px;
+	float:left;
+	line-height: 40px;
+}
+/*已被选择的结账房间或者手牌*/
+.roompay-consumption-info .input-group .selected-list-wrap{
+	height:40px;
+	width:220px;
+	overflow: auto;
+	float:left;
+	margin-left:10px;
+}
+.roompay-consumption-info .input-group .selected-list-wrap .selected-list{
+	width:100%;
+	height:auto;
+	overflow: hidden;
+}
+.roompay-consumption-info .input-group .selected-list span{
+	position:relative;
+	display:inline-block;
+	height:16px;
+	line-height: 16px;
+	font-size: 12px;
+	border-radius:8px;
+	padding:0 5px;
+	border:1px solid #e79100;
+	background-color: #f8ddb0;
+	float:left;
+	margin:4px 10px 0 0;
+	user-select:none;
+	-moz-user-select:none;
+}
+.roompay-consumption-info .input-group .selected-list i{
+	display:block;
+	position:absolute;
+	width:10px;
+	height:10px;
+	line-height: 10px;
+	text-align: center;
+	border:1px solid #000;
+	border-radius: 100%;
+	top:-5px;
+	right:-7px;
+	background-color:#fff;
+	font-style: normal;
+	font: 12px/1 "宋体";
+	overflow: hidden;
+	user-select:none;
+	-moz-user-select:none;
+}
+.roompay-consumption-info .input-group .selected-list i:hover{
+	cursor:pointer;
+	background-color: red;
+	color:#fff;
+}
+/*可结账的选择列表*/
+.roompay-consumption-info .input-group .select-list{
+	position:absolute;
+	top:55px;
+	left:128px;
+	width:100px;
+	max-height: 200px;
+	border:1px solid #ccc;
+	overflow: auto;
+}
+.roompay-consumption-info .input-group .select-list ul{
+	width:100%;
+}
+.roompay-consumption-info .input-group .select-list ul li{
+	font-size: 14px;
+	line-height: 22px;
+	background-color:#fff;
+	padding-left:10px;
+	cursor:pointer;
+}
+.roompay-consumption-info .input-group .select-list ul li:hover{
+	background-color:#ccc;
+	color:#fff;
+}
+.roompay-consumption-info .roompay-roomid{
+	height:36px;
+	width:100px;
+	font-size:14px;
+	outline: none;
+	background-color:#ededed;
+	border:1px solid #ccc;
+	text-indent: 10px;
+	float:left;
+}
+.roompay-consumption-info .roompay-search{
+	display:inline-block;
+	width:55px;
+	height:40px;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	transition:all .3s;
+	font-size: 14px;
+	text-align: center;
+	color:#333;
+	margin-left:15px;
+	float:left;
+}
+.roompay-consumption-info .roompay-list-thead{
+	height:50px;
+	width:100%;
+	background-color:#eaeaea;
+}
+.roompay-consumption-info .roompay-list-thead td{
+	height:50px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	color:#333;
+	font-weight: bolder;
+}
+.roompay-consumption-info .roompay-list-body .giveup td{
+	color:red;
+}
+.roompay-consumption-info .userhand{
+	width:80px;
+}
+.roompay-consumption-info .goods-name{
+	width:110px;
+}
+.roompay-consumption-info .goods-price{
+	width:80px;
+}
+.roompay-consumption-info .goods-number{
+	width:80px;
+}
+.roompay-consumption-info .goods-time{
+	width:110px;
+}
+.roompay-consumption-info .goods-subtotal{
+	width:80px;
+}
+.roompay-consumption-info .roompay-list-body-box{
+	width:540px;
+	height:310px;
+	overflow: hidden;
+}
+.roompay-consumption-info .roompay-list-body{
+	width:560px;
+	height:310px;
+	overflow-y:scroll;
+}
+.roompay-list-body tr{
+	border-bottom:1px solid #ccc;
+}
+.roompay-list-body tr:hover{
+	background-color:#f3d6ce;
+}
+.roompay-list-body td{
+	height:40px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	color:#333;
+}
+.roompay-way .top{
+	width:540px;
+	height:70px;
+	border-bottom:1px solid #ccc;
+}
+.roompay-way .top p{
+	height:70px;
+	line-height: 70px;
+	font-size: 14px;
+	color:#333;
+	user-select:none;
+	-moz-user-select:none;
+}
+.roompay-way .top p:nth-of-type(1){
+	float:left;
+	text-indent:20px;
+}
+.roompay-way .top p:nth-of-type(2){
+	float:right;
+	margin-right: 20px;
+}
+.roompay-way .roompay-total{
+	font-size: 22px;
+	color:#cf3d14;
+	font-weight: bolder;
+	margin-left:10px;
+}
+.roompay-way .roompay-way-content{
+	width: 540px;
+	height:359px;
+	overflow: hidden;
+	position:relative;
+}
+.roompay-way-content .select{
+	border:2px solid #e63d1c;
+}
+.roompay-way-content .pay-way{
+	box-sizing:border-box;
+	position:absolute;
+	width:206px;
+	height:65px;
+	background-color:#e2e2e3;
+	cursor:pointer;
+	user-select:none;
+	-moz-user-select:none;
+}
+.roompay-way-content .pay-way:hover{
+	background-color:#f5f5f5;
+}
+.roompay-way-content .pay-way .pay-way-text{
+	position:absolute;
+	height:14px;
+	line-height: 14px;
+	top:27px;
+	left:100px;
+	color:#333;
+	font-size: 14px;
+}
+.roompay-way-content .select .pay-way-text{
+	top:25px;
+	left:98px;
+}
+.roompay-way-content .cash-pay{
+	top:26px;
+	left:56px;
+	background: url(/Public/Home/images/pay_type_icon_03.png) no-repeat 0 -3px;
+	background-color:#e2e2e3;
+	background-origin: border-box;
+}
+.roompay-way-content .weixin-pay{
+	top:26px;
+	left:290px;
+	background: url(/Public/Home/images/pay_type_icon_03.png) no-repeat -235px -3px;
+	background-color:#e2e2e3;
+	background-origin: border-box;
+}
+.roompay-way-content .bank-pay{
+	top:103px;
+	left:56px;
+	background: url(/Public/Home/images/pay_type_icon_03.png) no-repeat 0 -80px;
+	background-color:#e2e2e3;
+	background-origin: border-box;
+}
+.roompay-way-content .vip-pay{
+	top:103px;
+	left:290px;
+	background: url(/Public/Home/images/pay_type_icon_03.png) no-repeat -235px -80px;
+	background-color:#e2e2e3;
+	background-origin: border-box;
+}
+.roompay-way-content .input-group{
+	height:50px;
+	position:absolute;
+	top:185px;
+	left:65px;
+}
+.roompay-way-content .input-group label{
+	height:50px;
+	line-height: 50px;
+	margin-right: 16px;
+	float:left;
+}
+.roompay-way-content .input-group .cash-money{
+	height:46px;
+	width:110px;
+	border:1px solid #ccc;
+	background-color:#ededed;
+	outline: none;
+	margin-right: 30px;
+	float:left;
+	text-indent:10px;
+}
+.roompay-way-content .input-group span{
+	display:inline-block;
+	height:50px;
+	line-height: 50px;
+	font-size: 22px;
+	font-weight: bolder;
+	color:#cf3d14;
+	float:left;
+}
+.roompay-way-content .weixin-code{
+	position:absolute;
+	bottom:15px;
+	left:100px;
+	width:160px;
+	height:160px;
+	background-color:#ededed;
+	overflow: hidden;
+}
+.roompay-way-content .weixin-code img{
+	width:160px;
+	height:160px;
+}
+.roompay-way-content .roompay-btn{
+	display:block;
+	position:absolute;
+	bottom:35px;
+	right:45px;
+	width:68px;
+	height:38px;
+	line-height: 38px;
+	text-align: center;
+	font-size: 16px;
+	color:#fff;
+	background-color: #cf3d14;
+	transition:all .3s;
+}
+.roompay-way-content .roompay-btn:hover{
+	background-color: #80260d;
+}
+
+/*增加消费界面*/
+.add-consumption{
+	position:fixed;
+	width:1150px;
+	height:600px;
+	top:50%;
+	left:50%;
+	margin-top:-300px;
+	margin-left:-575px;
+	z-index:1010;
+}
+.add-consumption-main{
+	width:100%;
+	height:530px;
+	box-sizing:border-box;
+	padding:25px;
+	background-color:#f7f7f7;
+}
+.add-consumption-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+.add-consumption-main .add-consumption-left{
+	width:540px;
+	height:480px;
+	float:left;
+}
+.add-consumption-main .add-consumption-right{
+	position:relative;
+	width:540px;
+	height:480px;
+	float:right;
+}
+.add-consumption-left .title{
+	overflow: hidden;
+	height:38px;
+}
+.add-consumption-left .title p{
+	height:38px;
+	line-height: 38px;
+	color:#2c323e;
+	font-size:22px;
+	font-weight:bolder;
+	float:left;
+}
+.add-consumption-left .title input{
+	height:28px;
+	outline:none;
+	border:1px solid #ccc;
+	float:right;
+	margin-top:3px;
+	text-indent:10px;
+}
+.add-consumption-left .title a{
+	display:inline-block;
+	width:50px;
+	height:32px;
+	line-height: 32px;
+	color:#fff;
+	float:right;
+	font-size: 14px;
+	background-color:#ff8a00;
+	text-align: center;
+	margin-top:3px;
+}
+.add-consumption-left .goods-type-nav{
+	float: left;
+	width:90px;
+	height:442px;
+	overflow: auto;
+	background-color:#fff;
+}
+.goods-type-nav ul li{
+	/*width:90px;*/
+	height:50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 14px;
+	cursor:pointer;
+}
+.goods-type-nav ul li:hover{
+	background-color:#ccc;
+}
+.goods-type-nav .select{
+	color:#d54217;
+	font-weight: bold;
+	background-color: #dfdfdf;
+}
+.add-consumption-left .all-goods-list{
+	width:440px;
+	height:442px;
+	float:right;
+	background-color:#fff;
+}
+.all-goods-list .all-goods-list-thead tr{
+	height:50px;
+	background-color: #dfdfdf;
+	width:440px;
+}
+.all-goods-list .all-goods-list-thead td{
+	height:50px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bolder;
+	color:#333;
+	font-size: 14px;
+}
+.all-goods-list td{
+	text-align: center;
+	vertical-align: middle;
+}
+.all-goods-list .item-number{
+	width:120px;
+}
+.all-goods-list .goods-name{
+	width:200px;
+}
+.all-goods-list .goods-price{
+	width:120px;
+}
+.all-goods-list-body-box{
+	width:440px;
+	height:392px;
+	overflow: hidden;
+}
+.all-goods-list-body-box .all-goods-list-body{
+	width:460px;
+	height:392px;
+	overflow-y:scroll;
+}
+.all-goods-list-body-box table{
+	width:440px;
+}
+.all-goods-list-body-box tr{
+	height:40px;
+	border-bottom:1px solid #ccc;
+	cursor: pointer;
+}
+.all-goods-list-body-box tr:hover{
+	background-color:#faeae6;
+}
+.add-consumption-right .title{
+	height:38px;
+}
+.add-consumption-right .title p{
+	height:38px;
+	line-height: 38px;
+	font-size: 16px;
+	color:#333;
+}
+.add-consumption-right .title p span{
+	color:#d54217;
+}
+.hand-goods-list{
+	height:390px;
+	width:540px;
+	background-color:#fff;
+}
+.hand-goods-list .hand-goods-list-thead{
+	height:50px;
+	background-color:#e4e2e2;
+}
+.hand-goods-list .hand-goods-list-thead td{
+	height:50px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	color:#333;
+	font-weight: bolder;
+}
+.hand-goods-list .hand-goods-list-body-box{
+	height:340px;
+	width:540px;
+	overflow: hidden;
+}
+.hand-goods-list .hand-goods-list-body-box .hand-goods-list-body{
+	height:340px;
+	width:560px;
+	overflow-y:scroll;
+}
+.hand-goods-list .hand-goods-list-body table{
+	width:540px;
+}
+.hand-goods-list .hand-goods-list-body tr{
+	height:40px;
+	border-bottom:1px solid #ccc;
+}
+.hand-goods-list .hand-goods-list-body tr:hover{
+	background-color:#faeae6;
+}
+.hand-goods-list .hand-goods-list-body td{
+	height:40px;
+	text-align: center;
+	vertical-align: middle;
+	color:#333;
+	font-size: 14px;
+}
+.hand-goods-list .item-number{
+	width:50px;
+}
+.hand-goods-list .goods-name{
+	width:130px;
+}
+.hand-goods-list .goods-technician{
+	width:70px;
+}
+.hand-goods-list .goods-price{
+	width:70px;
+}
+.hand-goods-list .goods-number{
+	width:100px;
+}
+.hand-goods-list .goods-subtotal{
+	width:70px;
+}
+.hand-goods-list .item-func{
+	width:50px;
+}
+	/*错误时*/
+.hand-goods-list-body-box table td.err{
+	color:red;
+	font-weight: bold;
+}
+.hand-goods-list-body .goods-number .sub-number, .hand-goods-list-body .goods-number .add-number{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	font:14px/20px '微软雅黑';
+	color:#333;
+	border-radius:100%;
+}
+.hand-goods-list-body .goods-number .sub-number:hover, .hand-goods-list-body .goods-number .add-number:hover{
+	background-color:#ff8a00;
+	color:#fff;
+}
+.hand-goods-list-body .goods-number input{
+	width:40px;
+	text-align: center;
+}
+.hand-goods-list .item-func span{
+	display: inline-block;
+	width:45px;
+	height:25px;
+	border:1px solid #d54217;
+	border-radius: 13px;
+	line-height: 25px;
+	font-size: 14px;
+	text-align: center;
+	color:#d54217;
+	cursor:pointer;
+	transition:all .3s;
+}
+.hand-goods-list .item-func span:hover{
+	background-color:#d54217;
+	color:#fff;
+}
+.add-consumption-btn-sure{
+	position:absolute;
+	bottom: 0;
+	right:0;
+	display:inline-block;
+	height:40px;
+	width:80px;
+	text-align: center;
+	line-height: 40px;
+	background-color:#d54217;
+	color:#fff;
+	font-size: 14px;
+	transition:all .3s;
+}
+.add-consumption-btn-sure:hover{
+	background-color:#993111;
+}
+	/*增加需要技师的项目界面*/
+.add-consumption .add-consumpyion-person{
+	position:fixed;
+	width:700px;
+	height:560px;
+	top:50%;
+	left:50%;
+	margin-top:-280px;
+	margin-left:-350px;
+	background-color: #fafafb;
+	z-index: 1040;
+	box-shadow: 0px 0px 31px #000;
+}
+.add-consumption .add-consumpyion-person .title{
+	text-align: center;
+	font-size: 22px;
+	font-weight: bold;
+	color:#333333;
+	height:30px;
+	margin: 25px 0 20px;
+}
+.add-consumption .add-consumpyion-person .consumpyion-name, .add-consumption .add-consumpyion-person .consumpyion-technician{
+	height:42px;
+	width:590px;
+	margin-left: 54px;
+	margin-bottom:12px;
+}
+.add-consumption .add-consumpyion-person .label{
+	line-height: 42px;
+	font-size: 14px;
+	color: #333;
+}
+.add-consumption .add-consumpyion-person .consumpyion-name span{
+	line-height: 42px;
+	font-size: 20px;
+	color: #e79100;
+}
+.add-consumption .add-consumpyion-person .consumpyion-technician input{
+	box-sizing:border-box;
+	height:42px;
+	width:230px;
+	border:1px solid #ccc;
+	background-color:#ffffff;
+	text-indent: 10px;
+}
+.add-consumption .add-consumpyion-person .select-technician-list{
+	width:590px;
+	height:300px;
+	margin:0 auto;
+	border:1px solid #ccc;
+	overflow: hidden;
+}
+.select-technician-list .select-technician-list-head{
+	width:590px;
+}
+.add-consumpyion-person .select-technician-list td{
+	height:40px;
+	text-align: center;
+	font-size: 14px;
+	vertical-align: middle;
+}
+.select-technician-list .select-technician-list-head td{
+	background-color: #e9e9e9;
+	font-weight: bold;
+}
+.select-technician-list .select-technician-list-main tr{
+	cursor:not-allowed;
+	color:red;
+	border-bottom: 1px solid #ccc;
+}
+	/*能选择的*/
+.select-technician-list .select-technician-list-main tr.able{
+	cursor:pointer;
+	color:#333;
+	background-color:#fff;
+}
+.select-technician-list .select-technician-list-main tr.able:hover{
+	background-color:#faeae6;
+}
+	/*选中*/
+.select-technician-list .select-technician-list-main tr.select{
+	cursor:pointer;
+	color:#333;
+	background-color:#ffdad1;
+}
+.add-consumpyion-person .select-technician-list .item, .add-consumpyion-person .select-technician-list .state{
+	width:100px;
+}
+.add-consumpyion-person .select-technician-list .name, .add-consumpyion-person .select-technician-list .sex, .add-consumpyion-person .select-technician-list .number{
+	width:130px;
+}
+.add-consumpyion-person .select-technician-list .select-technician-list-body{
+	width:590px;
+	height:260px;
+	overflow: hidden;
+}
+.add-consumpyion-person .select-technician-list .select-technician-list-body .select-technician-list-main{
+	width: 610px;
+	height:260px;
+	overflow-y:scroll;
+	background-color: #fff;
+}
+.add-consumpyion-person .btn-group{
+	position:absolute;
+	bottom:20px;
+	height:42px;
+	text-align: center;
+	width:100%;
+}
+.add-consumpyion-person .btn-group .sure, .add-consumpyion-person .btn-group .cancel{
+	display: inline-block;
+	width:70px;
+	height:42px;
+	line-height: 42px;
+	text-align: center;
+	margin-right:10px;
+	color:#fff;
+	font-size: 14px;
+}
+.add-consumpyion-person .btn-group .sure{
+	background-color: #cf3d14;
+}
+.add-consumpyion-person .btn-group .cancel{
+	background-color: #ccc;
+}

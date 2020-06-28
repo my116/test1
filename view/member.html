@@ -1,0 +1,220 @@
+<div class="member">
+	<div class="member-page-index" ng-if="memberPageShow[0]">
+		<div class="member-index-search-box">
+			<label for="memberSearchInput">会员查询</label>
+			<input id="memberSearchInput" type="text" ng-model="memberIndexPageInfo.searchText">
+			<a class="search-btn" href="javascript:;" ng-click="memberIndexPageInfo.searchText = ''">清空</a>
+		</div>
+		<a class="add-member-btn" href="javascript:;" ng-click="showAddNewMemberView()">新  增</a>
+		<a class="export-member-btn" href="javascript:;">导  出</a>
+		<table class="members-list">
+			<thead>
+				<tr>
+					<td class="item-number">序号</td>
+					<td class="member-name">姓名</td>
+					<td class="member-sex">性别</td>
+					<td class="member-class">会员等级</td>
+					<td class="member-class">状态</td>
+					<td class="member-money">余额</td>
+					<td class="member-tel">电话</td>
+					<td class="member-func">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="member in memberIndexPageInfo.memberList | filter:memberIndexPageInfo.searchText" repeat-finish="renderFinish()">
+					<td class="item-number">{{$index + 1}}</td>
+					<td class="member-name">{{member.names}}</td>
+					<td class="member-sex">{{member.sex | filterSex}}</td>
+					<td class="member-class">{{member.class}}</td>
+					<td class="member-class">{{member.state}}</td>
+					<td class="member-money">{{member.money/100 | currency:'￥'}}</td>
+					<td class="member-tel">{{member.phone}}</td>
+					<td class="member-func">
+						<span class="member-info-btn" ng-click="showMemberPageInfo(member.id)">详情</span>
+						<span class="member-recharge-btn" ng-click="showMemberRechargeView()">充值</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- 会员详情界面 -->
+	<div class="member-page-info" ng-if="memberPageShow[1]">
+		<!-- 会员个人信息 -->
+		<div class="member-personal-info">
+			<div class="member-head">
+				<i class="iconfont icon-msnui-male"></i>
+			</div>
+			<p class="member-name">{{memberPageInfo.info.names}}</p>
+			<p class="member-money">{{memberPageInfo.info.money/100 | currency:'￥'}}</p>
+			<p class="member-sex">{{memberPageInfo.info.sex | filterSex}}</p>
+			<p class="member-tel">{{memberPageInfo.info.phone}}</p>
+			<div class="member-other-info">
+				<p>生日：{{memberPageInfo.info.birthday | filterTime:'.':'YY-MM-DD'}}</p>
+				<p>微信号：{{memberPageInfo.info.wechat}}</p>
+				<p>会员等级：{{memberPageInfo.info.className}}</p>
+				<p>会员日期：{{memberPageInfo.info.startime | filterTime}}</p>
+			</div>
+			<a class="member-change-info-btn" href="javascript:;" ng-click="showEditMemberView(memberPageInfo.info.id)">修改</a>
+		</div>
+		<!-- 会员充值消费记录 -->
+		<div class="member-recharge-pay-info">
+			<table>
+				<thead>
+					<tr>
+						<td class="item">序号</td>
+						<td class="money">金额</td>
+						<td class="type">记录</td>
+						<td class="order">订单号码</td>
+						<td class="time">时间</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="record in memberPageInfo.memberRecords" repeat-finish="renderFinish()">
+						<td class="item">{{$index + 1}}</td>
+						<td class="money">{{record.money/100 | currency:'￥'}}</td>
+						<td class="type">{{record.content}}</td>
+						<td class="order">{{record.orderid}}</td>
+						<td class="time">{{record.times | filterTime}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- 新增会员弹窗 -->
+	<div class="add-member-view" ng-if="memberAlertView.addNewMemberView">
+		<div class="add-member-view-main">
+			<p class="title">添加新会员</p>
+			<div class="input-group member-name">
+				<label for="newMemberName">姓名:</label>
+				<input id="newMemberName" type="text" ng-model="addNewMemberInfo.memberName">
+				<span class="err" ng-if="addNewMemberErrInfo.nameErr.isErr" ng-bind="addNewMemberErrInfo.nameErr.errInfo"></span>
+			</div>
+			<div class="input-group member-tel">
+				<label for="newMemberTel">手机:</label>
+				<input id="newMemberTel" type="text" ng-model="addNewMemberInfo.memberTel">
+				<span class="err" ng-if="addNewMemberErrInfo.telErr.isErr" ng-bind="addNewMemberErrInfo.telErr.errInfo"></span>
+			</div>
+			<div class="input-group member-weixin">
+				<label for="newMemberWeixin">微信:</label>
+				<input id="newMemberWeixin" type="text" ng-model="addNewMemberInfo.memberWeixin">
+				<span class="err" ng-if="addNewMemberErrInfo.weixinErr.isErr" ng-bind="addNewMemberErrInfo.weixinErr.errInfo"></span>
+			</div>
+			<div class="input-group member-sex">
+				<label for="">性别:</label>
+				<span class="sex" ng-class="{'select':addNewMemberInfo.memberSex == '1'}" ng-click="selectMemberSex('1')"><i class="iconfont icon-msnui-male"></i></span>
+				<span class="sex" ng-class="{'select':addNewMemberInfo.memberSex == '2'}" ng-click="selectMemberSex('2')"><i class="iconfont icon-nv"></i></span>
+				<span class="err" ng-if="addNewMemberErrInfo.sexErr.isErr" ng-bind="addNewMemberErrInfo.sexErr.errInfo"></span>
+			</div>
+			<div class="input-group member-birthday">
+				<label for="addMember_Birthday">生日:</label>
+				<input id="addMember_Birthday" type="text" onfocus="laydate()" ng-model="addNewMemberInfo.memberBirthday">
+				<span class="err" ng-if="addNewMemberErrInfo.birthdayErr.isErr" ng-bind="addNewMemberErrInfo.birthdayErr.errInfo"></span>
+			</div>
+			<div class="input-group member-class">
+				<label for="">会员等级:</label>
+				<select name="" id="" ng-model="addNewMemberInfo.memberClass">
+					<option value="0">-- 选择等级 --</option>
+					<option ng-repeat="class in addNewMemberInfo.memberClassList" value="{{class.id}}">{{class.vipname}}</option>
+				</select>
+				<span class="err" ng-if="addNewMemberErrInfo.classErr.isErr" ng-bind="addNewMemberErrInfo.classErr.errInfo"></span>
+			</div>
+			<div class="new-member-btn-group">
+				<a class="sure" href="javascript:;" ng-click="makeAddNewMember()">确定</a>
+				<a class="cancel" href="javascript:;" ng-click="closeAddNewMemberView()">取消</a>
+			</div>
+		</div>
+		<!-- 关闭按钮 -->
+		<div class="add-member-view-close close-btn" ng-click="closeAddNewMemberView()">×</div>
+	</div>
+	<!-- 微信二维码 -->
+	<div class="code-image" ng-if="memberAlertView.codeImageView">
+		<div class="code-image-main">
+			<img id="memberCodeImage" src="http://pay.iloveyour.cn/Home/Index/VipBindingWechat?110" alt="微信扫描">
+			<!-- 关闭按钮 -->
+			<div class="code-image-close close-btn" ng-click="closeMemberCodeImageView()">×</div>
+		</div>
+	</div>
+	<!-- 会员信息修改 -->
+	<div class="add-member-view" ng-if="memberAlertView.editMemberView">
+		<div class="add-member-view-main">
+			<p class="title">会员信息修改</p>
+			<div class="input-group member-name">
+				<label for="newMemberName">姓名:</label>
+				<input id="newMemberName" type="text" ng-model="changeMemberInfo.memberName">
+				<span class="err" ng-if="changeMemberErrInfo.nameErr.isErr" ng-bind="changeMemberErrInfo.nameErr.errInfo"></span>
+			</div>
+			<div class="input-group member-tel">
+				<label for="newMemberTel">手机:</label>
+				<input id="newMemberTel" type="text" ng-model="changeMemberInfo.memberTel">
+				<span class="err" ng-if="changeMemberErrInfo.telErr.isErr" ng-bind="changeMemberErrInfo.telErr.errInfo"></span>
+			</div>
+			<div class="input-group member-weixin">
+				<label for="newMemberWeixin">微信:</label>
+				<input id="newMemberWeixin" type="text" ng-model="changeMemberInfo.memberWeixin">
+				<span class="err" ng-if="changeMemberErrInfo.weixinErr.isErr" ng-bind="changeMemberErrInfo.weixinErr.errInfo"></span>
+			</div>
+			<div class="input-group member-sex">
+				<label for="">性别:</label>
+				<span class="sex" ng-class="{'select':changeMemberInfo.memberSex == '1'}" ng-click="changeMemberSex('1')"><i class="iconfont icon-msnui-male"></i></span>
+				<span class="sex" ng-class="{'select':changeMemberInfo.memberSex == '2'}" ng-click="changeMemberSex('2')"><i class="iconfont icon-nv"></i></span>
+				<span class="err" ng-if="changeMemberErrInfo.sexErr.isErr" ng-bind="changeMemberErrInfo.sexErr.errInfo"></span>
+			</div>
+			<div class="input-group member-birthday">
+				<label for="">生日:</label>
+				<input id="changeMember_Birthday" type="text" onfocus="laydate()" ng-model="changeMemberInfo.memberBirthday">
+				<span class="err" ng-if="changeMemberErrInfo.birthdayErr.isErr" ng-bind="changeMemberErrInfo.birthdayErr.errInfo"></span>
+			</div>
+			<div class="input-group member-class">
+				<label for="">会员等级:</label>
+				<select name="" id="" ng-model="changeMemberInfo.memberClass">
+					<option value="0">-- 选择等级 --</option>
+					<option ng-repeat="item in changeMemberInfo.memberClassList" value="{{item.id}}">{{item.vipname}}</option>
+				</select>
+				<span class="err" ng-if="changeMemberErrInfo.classErr.isErr" ng-bind="changeMemberErrInfo.classErr.errInfo"></span>
+			</div>
+			<div class="new-member-btn-group">
+				<a class="sure" href="javascript:;" ng-click="makeChangeMember()">保存</a>
+				<a class="cancel" href="javascript:;" ng-click="closeEditMemberView()">取消</a>
+			</div>
+		</div>
+		<!-- 关闭按钮 -->
+		<div class="add-member-view-close close-btn" ng-click="closeEditMemberView()">×</div>
+	</div>
+	<!-- 充值 -->
+	<div class="member-recharge-view" ng-if="memberAlertView.memberRechargeView">
+		<div class="member-recharge-view-main">
+			<p class="title">充值</p>
+			<div class="input-group member-number">
+				<p>会员卡号：<span>010</span></p>
+			</div>
+			<div class="input-group member-name">
+				<p>会员姓名：<span>刘婷</span></p>
+			</div>
+			<div class="input-group member-class">
+				<p>会员等级：<span>普通会员</span></p>
+			</div>
+			<div class="input-group member-money">
+				<p>卡上余额：<span>364.00</span></p>
+			</div>
+			<div class="input-group member-recharge-type">
+				<label for="">充值方式：</label>
+				<select name="" id="">
+					<option value="">现金</option>
+					<option value="">刷卡</option>
+					<option value="">微信</option>
+				</select>
+			</div>
+			<div class="input-group member-recharge-money">
+				<label for="">充值金额：</label>
+				<input type="text">
+			</div>
+			<div class="member-recharge-btn-group">
+				<a class="sure" href="javascript:;">保存</a>
+				<a class="cancel" href="javascript:;" ng-click="closeMemberRechargeView()">取消</a>
+			</div>
+		</div>
+		<!-- 关闭按钮 -->
+		<div class="member-recharge-view-close close-btn" ng-click="closeMemberRechargeView()">×</div>
+	</div>
+</div>

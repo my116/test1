@@ -1,0 +1,41 @@
+//服务
+/**
+ * 上传图片服务
+ * @param  {[type]} $q          [description]
+ * @param  {[type]} $log){	var onLoad        [description]
+ * @return {[type]}             [description]
+ */
+projectB.factory('fileReader', ["$q", "$log", function($q, $log){
+	var onLoad = function(reader, deferred, scope) {
+		return function () {
+			scope.$apply(function () {
+				deferred.resolve(reader.result);
+			});
+		};
+	};
+	var onError = function (reader, deferred, scope) {
+		return function () {
+			scope.$apply(function () {
+				deferred.reject(reader.result);
+			});
+		};
+	};
+	var getReader = function(deferred, scope) {
+		var reader = new FileReader();
+		reader.onload = onLoad(reader, deferred, scope);
+		reader.onerror = onError(reader, deferred, scope);
+		return reader;
+	};
+	var readAsDataURL = function (file, scope) {
+		console.log(file)
+		var deferred = $q.defer();
+		var reader = getReader(deferred, scope);		 
+		reader.readAsDataURL(file);
+		return deferred.promise;
+	};
+	return {
+		readAsDataUrl: readAsDataURL  
+	};
+}]).factory('echarts', function(){
+	return echarts;
+})

@@ -1,0 +1,435 @@
+<div class="finance">
+	<!-- 侧边栏导航 -->
+	<div class="finance-sidebar">
+		<ul class="finance-sidebar-list">
+			<!-- <li class="selected" ng-click="financeContent = 'consumption'"><i class="iconfont icon-xiaofei"></i><span>消费明细</span></li> -->
+			<li class="business">
+				<ul class="business-list">
+					<li ng-class="{'selected':indexPageInfo.showPage == 'day-business' || indexPageInfo.showPage == 'history-business'}" ng-click="financeContent = 'day-business';changeFinanceSelected('day-business')"><i class="iconfont icon-yingyezhong"></i><span>营业情况</span></li>
+					<li ng-class="{'selected':indexPageInfo.showPage == 'day-business'}" ng-click="financeContent = 'day-business';changeFinanceSelected('day-business')">日营业</li>
+					<li ng-class="{'selected':indexPageInfo.showPage == 'history-business'}" ng-click="financeContent = 'history-business';changeFinanceSelected('history-business')">历史营业</li>
+				</ul>
+			</li>
+			<li ng-class="{'selected':indexPageInfo.showPage == 'technician'}" ng-click="financeContent = 'technician';changeFinanceSelected('technician')"><i class="iconfont icon-jishi"></i><span>技师情况</span></li>
+			<li ng-class="{'selected':indexPageInfo.showPage == 'member'}" ng-click="financeContent = 'member';changeFinanceSelected('member')"><i class="iconfont icon-huiyuan"></i><span>会员情况</span></li>
+		</ul>
+	</div>
+	<div class="finance-content" ng-switch="financeContent">
+		<!-- 消费明细 -->
+		<!-- <div class="wrap-box consumption-detail" ng-switch-default>
+			<div class="title">
+				<p>消费明细</p>
+			</div>
+			<div class="search-wrap">
+				<span>查询日期</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>至</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>项目名称</span>
+				<input type="text">
+				<a href="javascript:;" class="search-btn">查 询</a>
+				<a href="javascript:;" class="export-btn">导 出</a>
+			</div>
+			<table class="list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>项目名称</td>
+						<td>消费数量</td>
+						<td>合计金额</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>泰式按摩</td>
+						<td>18</td>
+						<td>￥380.00</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="amount">
+				<span class="total">2250.00</span>
+				<span>合计金额：</span>
+			</div>
+		</div> -->
+
+		<!-- 技师情况 -->
+		<div class="wrap-box technician-detail" ng-switch-when="technician">
+			<div class="title">
+				<p>技师情况</p>
+			</div>
+			<div class="search-wrap">
+				<span>查询日期</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>至</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>技师姓名</span>
+				<input type="text">
+				<a href="javascript:;" class="search-btn">查 询</a>
+				<a href="javascript:;" class="export-btn">导 出</a>
+			</div>
+			<table class="list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>编号</td>
+						<td>姓名</td>
+						<td>项目名称</td>
+						<td>上钟量</td>
+						<td>加钟量</td>
+						<td>总钟量</td>
+						<td>金额</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>003</td>
+						<td>刘伟伟</td>
+						<td>传统中式按摩</td>
+						<td>1</td>
+						<td>1</td>
+						<td>2</td>
+						<td>￥230.00</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="amount">
+				<span class="total">2250.00</span>
+				<span>合计金额：</span>
+				<span class="count">4</span>
+				<span>总钟合计：</span>
+				<span class="count">2</span>
+				<span>加钟合计：</span>
+				<span class="count">2</span>
+				<span>上钟合计：</span>
+			</div>
+		</div>
+		<!-- 会员情况 -->
+		<div class="wrap-box member-detail" ng-switch-when="member">
+			<div class="title">
+				<p>会员情况</p>
+			</div>
+			<div class="search-wrap">
+				<span>查询日期</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>至</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>手机号码</span>
+				<input type="text">
+				<a href="javascript:;" class="search-btn">查 询</a>
+				<a href="javascript:;" class="export-btn">导 出</a>
+			</div>
+			<table class="list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>姓名</td>
+						<td>电话号码</td>
+						<td>会员等级</td>
+						<td>存入金额</td>
+						<td>支付金额</td>
+						<td>余额</td>
+						<td>截止日期</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>张山</td>
+						<td>18288888888</td>
+						<td>白金会员</td>
+						<td>1000.00</td>
+						<td>500.00</td>
+						<td>500.00</td>
+						<td>2016-12-12</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>李四</td>
+						<td>18277777777</td>
+						<td>普通会员</td>
+						<td>10000.00</td>
+						<td>5000.00</td>
+						<td>500.00</td>
+						<td>2016-12-12</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="amount">
+				<span class="total">2250.00</span>
+				<span>合计余额：</span>
+				<span class="total">100000.00</span>
+				<span>合计支付：</span>
+				<span class="total">200000.00</span>
+				<span>合计存入：</span>
+			</div>
+		</div>
+		<!-- 营业情况 -->
+		<div class="wrap-box day-business-detail" ng-switch-default>
+			<div class="title">
+				<p>日营业</p>
+			</div>
+			<div class="search-wrap">
+				<span>查询日期</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<a href="javascript:;" class="search-btn" ng-click="searchDayBusinessDetail()">查 询</a>
+				<a href="javascript:;" class="export-btn">导 出</a>
+			</div>
+			<!-- 营业额和充值表 -->
+			<table class="list">
+				<thead>
+					<tr>
+						<td></td>
+						<td>现金</td>
+						<td>刷卡</td>
+						<td>微信</td>
+						<td>会员</td>
+						<td>合计</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>营业额</td>
+						<td ng-repeat="turnover in dayBusinessInfo.allDay.turnover">{{turnover}}</td>
+					</tr>
+					<tr>
+						<td>充值</td>
+						<td ng-repeat="recharge in dayBusinessInfo.allDay.recharge">{{recharge}}</td>
+					</tr>
+					<tr>
+						<td>收款合计</td>
+						<td ng-repeat="total in dayBusinessInfo.allDay.total">{{total}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div echarts id="dayTurnover" style="width:450px;height:400px;display:inline-block" option="dayTurnoverOption"></div>
+			<div echarts id="dayTotal" style="width:450px;height:400px;display:inline-block;float:right" option="dayTotalOption"></div>
+			<div class="amount">
+				<span class="total">130500.00</span>
+				<span>合计收入：</span>
+				<span class="total">125504.00</span>
+				<span>合计营业额：</span>
+				<span class="total">12478.00</span>
+				<span>合计充值：</span>
+			</div>
+			<!-- 当日营业明细 -->
+			<h3>当日营业明细</h3>
+			<table class="list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>名称</td>
+						<td>营业额</td>
+						<td>占比</td>
+						<td>数量</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="goods in dayBusinessInfo.goodsList">
+						<td>{{$index + 1}}</td>
+						<td>{{goods.goodsName}}</td>
+						<td>{{goods.info[0]['data'][0]}}</td>
+						<td>{{goods.info[0]['data'][2]}}</td>
+						<td>{{goods.info[0]['data'][1]}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div echarts id="dayBusinessEcharts" eid="dayBusinessEcharts" option="dayBusinessEchartsOption" style="width: 800px;height: 400px;"></div>
+			<table class="list" ng-if="false">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>名称</td>
+						<td>内容</td>
+						<td>1月</td>
+						<td>2月</td>
+						<td>3月</td>
+						<td>4月</td>
+						<td>5月</td>
+						<td>6月</td>
+						<td>7月</td>
+						<td>8月</td>
+						<td>9月</td>
+						<td>10月</td>
+						<td>11月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>12月</td>
+						<td>合计</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="4">1</td>
+						<td rowspan="4">按摩</td>
+						<td>金额</td>
+						<td>1000</td>
+						<td>1000.00</td>
+						<td>500.00</td>
+						<td>500.00</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+					</tr>
+					<tr>
+						<td>占比</td>
+						<td>1000</td>
+						<td>1000.00</td>
+						<td>500.00</td>
+						<td>500.00</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+					</tr>
+					<tr>
+						<td>环比</td>
+						<td>1000</td>
+						<td>1000.00</td>
+						<td>500.00</td>
+						<td>500.00</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+					</tr>
+					<tr>
+						<td>同比</td>
+						<td>1000</td>
+						<td>1000.00</td>
+						<td>500.00</td>
+						<td>500.00</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+						<td>2016</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- echarts -->
+			<!-- <div id="dayBusinessEcharts" style="width: 600px;height:400px;"></div> -->
+			<!-- <div bar-charts  data-source='groupData' style="width: 800px;height: 400px;"></div> -->
+		</div>
+		<!-- 月营业情况 -->
+		<div class="wrap-box business-detail" ng-switch-when="history-business">
+			<div class="title">
+				<p>历史营业</p>
+			</div>
+			<div class="search-wrap">
+				<span>查询日期</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<span>至</span>
+				<input type="text" placeholder="2016-10-10" onfocus="laydate()">
+				<a href="javascript:;" class="search-btn">查 询</a>
+				<a href="javascript:;" class="export-btn">导 出</a>
+			</div>
+			<table class="list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>名称</td>
+						<td>内容</td>
+						<td ng-repeat="month in historyBusinessInfo.goodsList[0]['info']">{{month.date}}</td>
+					</tr>
+				</thead>
+				<tbody ng-repeat="goods in historyBusinessInfo.goodsList">
+					<tr>
+						<td rowspan="3">{{$index + 1}}</td>
+						<td class="goodsName" rowspan="3">{{goods.goodsName}}</td>
+						<td>金额</td>
+						<td ng-repeat="month in goods['info']">{{month.data[0]}}</td>
+					</tr>
+					<tr>
+						<td>占比</td>
+						<td ng-repeat="month in goods['info']">{{month.data[1]}}</td>
+					</tr>
+					<tr>
+						<td>数量</td>
+						<td ng-repeat="month in goods['info']">{{month.data[2]}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="amount">
+				<span class="total">2250.00</span>
+				<span>合计余额：</span>
+				<span class="total">100000.00</span>
+				<span>合计支付：</span>
+				<span class="total">200000.00</span>
+				<span>合计存入：</span>
+			</div>
+		</div>
+
+	</div>
+
+</div>

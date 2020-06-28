@@ -1,0 +1,103 @@
+{
+	"roomNumber":"305",
+	"roomCount":4,
+	"roomStartTime":"2016-11-29 19:00:00",
+	"roomHandsInfo":[
+		{
+			"userHand":"1003",
+			"handid":"1003",
+			"startTime":"2016-11-29 19:20:00",
+			"consumption":[
+				{
+					"goodsID":"0001",
+					"goodsName":"泰式足浴",
+					"goodsPrice":160,
+					"goodsNumber":1,
+					"goodsTime":"2016-11-29 20:00:00"
+				},
+				{
+					"goodsID":"0004",
+					"goodsName":"泰式按摩",
+					"goodsPrice":220,
+					"goodsNumber":2,
+					"goodsTime":"2016-11-29 20:05:00"
+				},
+				{
+					"goodsID":"0005",
+					"goodsName":"小吃",
+					"goodsPrice":50,
+					"goodsNumber":2,
+					"goodsTime":"2016-11-29 20:06:00"
+				},
+				{
+					"goodsID":"0006",
+					"goodsName":"饮料",
+					"goodsPrice":20,
+					"goodsNumber":3,
+					"goodsTime":"2016-11-29 20:07:00"
+				},
+				{
+					"goodsID":"0006",
+					"goodsName":"水果",
+					"goodsPrice":40,
+					"goodsNumber":3,
+					"goodsTime":"2016-11-29 21:07:00"
+				}
+			]
+		},
+		{
+			"userHand":"1004",
+			"startTime":"2016-11-29 19:20:00",
+			"consumption":[
+				{
+					"goodsID":"0001",
+					"goodsName":"泰式足浴",
+					"goodsPrice":160,
+					"goodsNumber":1,
+					"goodsTime":"2016-11-29 20:00:00"
+				},
+				{
+					"goodsID":"0005",
+					"goodsName":"小吃",
+					"goodsPrice":50,
+					"goodsNumber":2,
+					"goodsTime":"2016-11-29 20:06:00"
+				},
+				{
+					"goodsID":"0006",
+					"goodsName":"饮料",
+					"goodsPrice":20,
+					"goodsNumber":3,
+					"goodsTime":"2016-11-29 20:07:00"
+				}
+			]
+		},
+		{
+			"userHand":"1005",
+			"startTime":"2016-11-29 19:20:00",
+			"consumption":[
+				{
+					"goodsID":"0001",
+					"goodsName":"泰式足浴",
+					"goodsPrice":160,
+					"goodsNumber":1,
+					"goodsTime":"2016-11-29 20:00:00"
+				},
+				{
+					"goodsID":"0005",
+					"goodsName":"小吃",
+					"goodsPrice":50,
+					"goodsNumber":2,
+					"goodsTime":"2016-11-29 20:06:00"
+				},
+				{
+					"goodsID":"0006",
+					"goodsName":"饮料",
+					"goodsPrice":20,
+					"goodsNumber":3,
+					"goodsTime":"2016-11-29 20:07:00"
+				}
+			]
+		}
+	]
+}

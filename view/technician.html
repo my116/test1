@@ -1,0 +1,239 @@
+<div class="technician">
+	<!-- 技师首页 -->
+	<div class="technician-page-index" ng-if="technicianPageShow[0]">
+		<div class="technician-sidebar">
+			<ul class="technician-kinds" ng-click="technicianContent = 'technicianContentAll';closeEditTechnicianView()">
+				<li ng-class="{'select':technicianIndexPageInfo.listTitle == '全部技师'}" ng-click="changeTechnicianSelect('','全部技师')">
+					<i class="iconfont icon-fenlei1"></i>
+					<span>全部技师</span>
+				</li>
+				<li ng-repeat="kind in technicianIndexPageInfo.kindsList" ng-class="{'select': technicianIndexPageInfo.listTitle == kind.name}" ng-click="changeTechnicianSelect(kind.id,kind.name)">{{kind.name}}</li>
+			</ul>
+			<a class="add-new-technician-btn" href="javascript:;" ng-click="technicianContent = 'technicianEdit';showEditTechnicianView()">添加技师</a>
+		</div>
+		<!-- 技师首页右边主要区域 -->
+		<div class="technician-content" ng-switch="technicianContent">
+			<!-- 技师列表页 -->
+			<div class="technician-content-all" ng-switch-default>
+				<div class="title" ng-bind="technicianIndexPageInfo.listTitle"></div>
+				<div class="technician-search">
+					<input type="text" placeholder="请输入技师姓名" ng-model="technicianIndexPageInfo.searchText">
+					<a href="javascript:;" ng-click="technicianIndexPageInfo.searchText = ''">清空</a>
+				</div>
+				<table class="technician-list">
+					<thead>
+						<tr>
+							<td>序号</td>
+							<td>姓名</td>
+							<td>编号</td>
+							<td>性别</td>
+							<td>当前状态</td>
+							<td>当前服务对象</td>
+							<td class="technician-func">操作</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="technician in technicianIndexPageInfo.technicianList | filter:filterTechnician()" repeat-finish="renderFinish()">
+							<td>{{$index + 1}}</td>
+							<td>{{technician.names}}</td>
+							<td>{{technician.number}}</td>
+							<td>{{technician.sex | filterSex}}</td>
+							<td>{{technician.state | filterTechnicianState}}</td>
+							<td>{{technician.info | filterTechnicianFor}}</td>
+							<td><span class="technician-info" ng-click="showTechnicianPageInfo(technician.id)">详情</span><span class="technician-del" ng-click="deleteTechnician(technician.id,technician.names,technician.number)">删除</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- 技师编辑页 -->
+			<div class="technician-edit" ng-switch-when="technicianEdit">
+				<div class="title" ng-bind="editTechnicianInfo.titleName"></div>
+				<div class="technician-edit-content">
+					<!-- 修改图片 -->
+					<div class="item-group">
+						<div class="left-text">
+							<p>图片</p>
+						</div>
+						<div class="right-edit">
+							<div class="edit-img" ng-click="upTechnicianImg()">
+								<p>上传图片</p>
+								<img src="{{editTechnicianInfo.imageSrc}}"/>
+								<input id="upTechnicianImg" type="file" file-model="myFile"/>
+							</div>
+						</div>
+					</div>
+					<!-- 技师姓名 -->
+					<div class="item-group edit-technician-name">
+						<div class="left-text">
+							<p>姓名</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editTechnicianInfo.name">
+						</div>
+					</div>
+					<!-- 性别 -->
+					<div class="item-group edit-technician-sex">
+						<div class="left-text">
+							<p>性别</p>
+						</div>
+						<div class="right-edit">
+							<span ng-class="{'select':editTechnicianInfo.sex == '1'}" ng-click="selectTechnicianSex('1')"><i class="iconfont icon-check"></i></span> 男 
+							<span ng-class="{'select':editTechnicianInfo.sex == '2'}" ng-click="selectTechnicianSex('2')"><i class="iconfont icon-check"></i></span> 女 
+						</div>
+					</div>
+					<!-- 技师编号 -->
+					<div class="item-group edit-technician-birthday">
+						<div class="left-text">
+							<p>技师编号</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editTechnicianInfo.number">
+						</div>
+					</div>
+					<!-- 技师手机号 -->
+					<div class="item-group edit-technician-birthday">
+						<div class="left-text">
+							<p>手机号码</p>
+						</div>
+						<div class="right-edit">
+							<input type="tel" ng-model="editTechnicianInfo.tel">
+						</div>
+					</div>
+					<!-- 技师微信 -->
+					<div class="item-group edit-technician-birthday">
+						<div class="left-text">
+							<p>微信</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editTechnicianInfo.weixin">
+						</div>
+					</div>
+					<!-- 出生日期 -->
+					<div class="item-group edit-technician-birthday">
+						<div class="left-text">
+							<p>出生日期</p>
+						</div>
+						<div class="right-edit">
+							<input id="technicianBirthday" type="text" onfocus="laydate()" ng-model="editTechnicianInfo.birthday">
+						</div>
+					</div>
+					<!-- 技师服务类型 -->
+					<div class="item-group edit-technician-service">
+						<div class="left-text">
+							<p>服务</p>
+						</div>
+						<div class="right-edit">
+							<div class="service-item" ng-repeat="item in editTechnicianInfo.skill">
+								<span ng-class="{'select':editTechnicianInfo.skill[$index]['select']}" ng-click="selectTechnicianSkill(item.id)"><i class="iconfont icon-check"></i></span> {{item.name}} &nbsp;
+							</div>
+						</div>
+					</div>
+					<!-- 是否锁定技师 -->
+					<div class="item-group edit-technician-lock">
+						<div class="left-text">
+							<p>是否锁定</p>
+						</div>
+						<div class="right-edit">
+							<select name="" id="" ng-model="editTechnicianInfo.lock">
+								<option value="0">请选择</option>
+								<option value="4">锁定</option>
+								<option value="1">不锁定</option>
+							</select>
+							<span>锁定后客人无法选择</span>
+						</div>
+					</div>
+					<!-- 简介 -->
+					<div class="item-group edit-technician-introduce">
+						<div class="left-text">
+							<p>简介</p>
+						</div>
+						<div class="right-edit">
+							<textarea name="" id="" ng-model="editTechnicianInfo.intro"></textarea>
+						</div>
+					</div>
+					<!-- 按钮 -->
+					<div class="item-group edit-btn">
+						<div class="left-text">
+							<p></p>
+						</div>
+						<div class="right-edit">
+							<a class="edit-btn-sure" href="javascript:;" ng-click="makeEditTechnician()">确定</a>
+						</div>
+					</div>
+				</div>
+				<!-- 二维码弹窗 -->
+				<div class="code-image" ng-if="technicianAlertView.codeImageView">
+					<img id="technicianCodeImage" src="http://pay.iloveyour.cn/Home/Index/TccBindingWechat?110" alt="微信扫描" ng-show="editTechnicianInfo.codeImageShow">
+					<!-- 关闭按钮 -->
+					<div class="image-close close-btn" ng-click="closeCodeImageView()">×</div>
+				</div>
+			</div>
+		</div>
+		<!-- 删除技师确定界面 -->
+		<div class="del-technician-view del-pad-view" ng-if="technicianAlertView.delTechnicianView">
+			<div class="del-pad-view-main">
+				<p class="info">确定删除名称为<span>{{delTechnicianInfo.name}}</span>的技师吗？</p>
+				<div class="btn-group">
+					<a class="sure" href="javascript:;" ng-click="makeDelTechnician()">确定</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="del-technician-view-close close-btn" ng-click="closeDelTechnicianView()">×</div>
+		</div>
+	</div>
+	<!-- 技师详情页 -->
+	<div class="technician-page-info" ng-if="technicianPageShow[1]">
+		<div class="technician-personal-info">
+			<div class="technician-head">
+				<img src="{{technicianPageInfo.techInfo.imageurl}}" alt="">
+			</div>
+			<p class="technician-name">{{technicianPageInfo.techInfo.names}}</p>
+			<p class="technician-sex">{{technicianPageInfo.techInfo.sex | filterSex}}</p>
+			<div class="technician-other-info">
+				<p><strong>编号</strong>：<span>{{technicianPageInfo.techInfo.number}}</span></p>
+				<p><strong>生日</strong>：<span>{{technicianPageInfo.techInfo.birthday | filterTime:'-':'YY-MM-DD'}}</span></p>
+				<p><strong>手机</strong>：<span>{{technicianPageInfo.techInfo.phone}}</span></p>
+				<p><strong>微信</strong>：<span>{{technicianPageInfo.techInfo.wechat}}</span></p>
+				<p><strong>服务</strong>：<span ng-repeat="item in technicianPageInfo.techInfo.server">{{item}} </span></p>
+				<p><strong>服务次数</strong>：<span>{{technicianPageInfo.techInfo.numberof}}</span></p>
+				<p><strong>评分</strong>：<span>{{technicianPageInfo.techInfo.average}}</span></p>
+				<p><strong>状态</strong>：<span>{{technicianPageInfo.techInfo.state | filterTechnicianState}}</span></p>
+				<p><strong>简介</strong>：<span>{{technicianPageInfo.techInfo.content}}</span></p>
+			</div>
+			<a class="technician-change-info-btn" href="javascript:;" ng-click="changeTechnicianInfo()">修改</a>
+		</div>
+		<div class="technician-service-info">
+			<div class="title">
+				<span ng-click="closeTechnicianPageInfo()">全部技师</span> > 详情
+			</div>
+			<table class="technician-service-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>房间</td>
+						<td>手牌</td>
+						<td>时间</td>
+						<td>服务项目</td>
+						<td>服务时长</td>
+						<td>加钟</td>
+						<td>评分</td>
+						<td>金额</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="record in technicianPageInfo.techRecord">
+						<td>{{$index + 1}}</td>
+						<td>{{record.terminalname}}</td>
+						<td>{{record.handname}}</td>
+						<td>{{record.starttime | filterTime}}</td>
+						<td>{{record.servername}}</td>
+						<td>{{record.servertime/60}}分钟</td>
+						<td>{{record.servernumber - 1}}</td>
+						<td>{{record.score}}</td>
+						<td>{{record.money/100 + record.addmoney/100 * (record.servernumber - 1) | currency:'￥'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

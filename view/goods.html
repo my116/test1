@@ -1,0 +1,250 @@
+<div class="goods">
+	<div class="goods-page-index" ng-show="goodsPageShow[0]">
+		<div class="goods-sidebar">
+			<div class="goods-nav-title" ng-class="{'select':indexPageInfo.goodsListTitle == '全部商品'}" ng-click="goodsContent = 'goodsContentAll';changeSelectGoodsKind('')">
+				<i class="iconfont icon-fenlei1"></i>
+				<span>全部商品</span>
+			</div>
+			<ul class="goods-kinds" ng-click="goodsContent = 'goodsContentAll'">
+				<li ng-repeat="kind in indexPageInfo.goodsKindsList" ng-class="{'select':indexPageInfo.goodsListTitle == kind.catename}" ng-click="changeSelectGoodsKind(kind.catename)">{{kind.catename}}</li>
+			</ul>
+			<a class="add-new-goods-btn" href="javascript:;" ng-click="goodsContent = 'goodsEdit';showEditGoodsView()">添加商品</a>
+		</div>
+		<div class="goods-content" ng-switch="goodsContent">
+			<!-- 商品列表页 -->
+			<div class="goods-content-all" ng-switch-default>
+				<div class="title" ng-bind="indexPageInfo.goodsListTitle"></div>
+				<table class="goods-list">
+					<thead>
+						<tr>
+							<td>序号</td>
+							<td>名称</td>
+							<td>单价</td>
+							<td>项目类别</td>
+							<td>供应时间-开始</td>
+							<td>供应时间-结束</td>
+							<td class="goods-func">操作</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="goods in indexPageInfo.allGoodsList | filter:goodsFilter(indexPageInfo.selectGoodsKind)" repeat-finish="renderFinish()">
+							<td>{{$index + 1}}</td>
+							<td>{{goods.pname}}</td>
+							<td>{{goods.money/100 | currency:'￥'}}</td>
+							<td>{{goods.catename}}</td>
+							<td>{{goods.starttime}}</td>
+							<td>{{goods.endtime}}</td>
+							<td><span class="goods-info" ng-click="showGoodsPageInfo(goods.id)">详情</span><span class="goods-del" ng-click="deleteGoods(goods.id)">删除</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- 商品编辑页 -->
+			<div class="goods-edit" ng-switch-when="goodsEdit">
+				<div class="title" ng-bind="editGoodsInfo.title"></div>
+				<div class="goods-edit-content">
+					<!-- 修改图片 -->
+					<div class="item-group">
+						<div class="left-text">
+							<p>图片</p>
+						</div>
+						<div class="right-edit">
+							<div class="edit-img" ng-click="upGoodsImg()">
+								<p>上传图片</p>
+								<img src="{{editGoodsInfo.imageSrc}}"/>
+								<input id="upGoodsImg" type="file" file-model="myFile"/>
+							</div>
+						</div>
+					</div>
+					<!-- 修改商品名称 -->
+					<div class="item-group edit-goodsname">
+						<div class="left-text">
+							<p>商品名称</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editGoodsInfo.goodsName">
+						</div>
+					</div>
+					<!-- 修改商品分类 -->
+					<div class="item-group edit-goodskinds">
+						<div class="left-text">
+							<p>分类</p>
+						</div>
+						<div class="right-edit">
+							<select name="" id="" ng-change="selectServers(editGoodsInfo.goodsKind)" ng-model="editGoodsInfo.goodsKind">
+								<option value="0">-- 商品分类 --</option>
+								<option ng-repeat="kind in indexPageInfo.goodsKindsList" value="{{kind.id}}">{{kind.catename}}</option>
+							</select>
+							<span ng-click="showAddGoodsKindsView()">添加分类</span>
+						</div>
+					</div>
+					<!-- 服务时长 -->
+					<div class="item-group edit-serverstime" ng-if="editGoodsInfo.isServers == '2'">
+						<div class="left-text">
+							<p>服务时长</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editGoodsInfo.serversTime">
+							<span>分钟</span>
+						</div>
+					</div>
+					<!-- 加钟时长 -->
+					<div class="item-group edit-serverstime" ng-if="editGoodsInfo.isServers == '2'">
+						<div class="left-text">
+							<p>加钟时长</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editGoodsInfo.addTime">
+							<span>分钟</span>
+						</div>
+					</div>
+					<!-- 供应时间 -->
+					<div class="item-group edit-goodstime">
+						<div class="left-text">
+							<p>供应时间</p>
+						</div>
+						<div class="right-edit">
+							<input id="goodsStartTime" time-dropper on-change="valueText" meridians="true" format="H:mm" mouse-wheel="true" ng-model="editGoodsInfo.goodsStartTime">
+							<span>至</span>
+							<!-- <input id="goodsEndTime" time-dropper on-change="valueText" meridians="true" format="H:mm" mouse-wheel="true" ng-model="editGoodsInfo.goodsEndTime"> -->
+							<input id="goodsEndTime" onfocus="dtime()" ng-model="editGoodsInfo.goodsEndTime">
+						</div>
+					</div>
+					<!-- 通知设备 -->
+					<div class="item-group edit-goodscall">
+						<div class="left-text">
+							<p>通知设备</p>
+						</div>
+						<div class="right-edit">
+							<div class="item" ng-repeat="pad in editGoodsInfo.padList">
+								<span ng-class="{'select':editGoodsInfo.sendMsg[$index]['select']}" ng-click="selectCall($index,pad.id)"><i class="iconfont icon-check"></i></span>{{pad.padname}}
+							</div>
+						</div>
+					</div>
+					<!-- 价格 -->
+					<div class="item-group edit-goodsprice">
+						<div class="left-text">
+							<p>价格</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editGoodsInfo.goodsPrice">
+						</div>
+					</div>
+					<!-- 加钟价格 -->
+					<div class="item-group edit-goodsprice" ng-if="editGoodsInfo.isServers == '2'">
+						<div class="left-text">
+							<p>加钟价格</p>
+						</div>
+						<div class="right-edit">
+							<input type="text" ng-model="editGoodsInfo.addPrice">
+						</div>
+					</div>
+					<!-- 会员价格 -->
+					<div class="item-group edit-goodsprice-vip">
+						<div class="left-text">
+							<p>会员价格</p>
+						</div>
+						<div class="right-edit">
+							<div class="price-group" ng-repeat="class in editGoodsInfo.goodsVipPrice" repeat-finish="renderFinish()">
+								<span>{{class.vipname}}：</span>
+								<input type="text" ng-model="editGoodsInfo.goodsVipPrice[$index]['price']">
+							</div>
+						</div>
+					</div>
+					<!-- 简介 -->
+					<div class="item-group edit-goodsintroduce">
+						<div class="left-text">
+							<p>简介</p>
+						</div>
+						<div class="right-edit">
+							<textarea name="" id="" ng-model="editGoodsInfo.goodsInfo"></textarea>
+						</div>
+					</div>
+					<!-- 按钮 -->
+					<div class="item-group edit-btn">
+						<div class="left-text">
+							<p></p>
+						</div>
+						<div class="right-edit">
+							<a class="edit-btn-sure" href="javascript:;" ng-click="makeEditGoods()">确定</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 商品详情页 -->
+	<div class="goods-page-info" ng-show="goodsPageShow[1]">
+		<div class="title"><span ng-click="closeGoodsPageInfo()">全部商品</span> > 详情</div>
+		<div class="goods-page-info-content">
+			<div class="goods-info-img">
+				<img src="{{goodsPageInfo.goodsData['imageurl']}}" alt="{{goodsPageInfo.goodsData['pname']}}">
+				<a class="btn-edit" href="javascript:;" ng-click="changeGoodsInfo()">修改</a>
+			</div>
+			<div class="goods-info-text">
+				<p class="goods-name" ng-bind="goodsPageInfo.goodsData['pname']"></p>
+				<div class="info-group">
+					<p>原价：</p>
+					<span class="goods-price" ng-bind="goodsPageInfo.goodsData['money']/100 | currency:'￥'"></span>
+				</div>
+				<div class="info-group">
+					<p>会员价：</p>
+					<p class="goods-vip-price"><span ng-repeat="vip in goodsPageInfo.vipPrice">{{vip.vipName}}：{{vip.price/100 | currency:'￥'}}   </span></p>
+				</div>
+				<div class="info-group">
+					<p>通知设备：</p>
+					<span class="goods-call" ng-repeat="pad in goodsPageInfo.goodsData['sendmsg']"> {{pad}} </span>
+					<!-- <span class="goods-call">厨房 </span>
+					<span class="goods-call"> 吧台 </span> -->
+				</div>
+				<div class="info-group">
+					<p>开始供应时间：</p>
+					<span class="goods-time" ng-bind="goodsPageInfo.goodsData['starttime']"></span>
+				</div>
+				<div class="info-group">
+					<p>结束供应时间：</p>
+					<span class="goods-time" ng-bind="goodsPageInfo.goodsData['endtime']"></span>
+				</div>
+				<div class="info-group" ng-if="goodsPageInfo.goodsData['serverstime']/60 > 0">
+					<p>服务时长：</p>
+					<span class="goods-time">{{goodsPageInfo.goodsData['serverstime']/60}}分钟</span>
+				</div>
+				<div class="info-group" ng-if="goodsPageInfo.goodsData['serverstime']/60 > 0">
+					<p>加钟时长：</p>
+					<span class="goods-time">{{goodsPageInfo.goodsData['addtime']/60}}分钟</span>
+				</div>
+				<div class="info-group" ng-if="goodsPageInfo.goodsData['serverstime']/60 > 0">
+					<p>加钟价格：</p>
+					<span class="goods-time">{{goodsPageInfo.goodsData['addmoney']/100}}元</span>
+				</div>
+				<div class="info-group">
+					<p>简介：</p>
+					<div class="goods-introduce" ng-bind="goodsPageInfo.goodsData['content']"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 添加商品分类 -->
+	<div class="add-goodskinds-view" ng-if="goodsAlertView.addGoodsKindsView">
+		<div class="add-goodskinds-view-main">
+			<p class="title">添加新分类</p>
+			<div class="input-group">
+				<label class="goodskinds-name" for="">分类名称</label>
+				<input type="text" ng-model="addGoodsKindsInfo.kindName">
+				<span ng-if="addGoodsKinds_nameErr.isErr" ng-bind="addGoodsKinds_nameErr.errInfo"></span>
+			</div>
+			<div class="input-group">
+				<p>是否需要技师</p>
+				<input id="needTechnicianYES" type="radio" name="needTechnician" value="2" ng-model="addGoodsKindsInfo.state"> <label for="needTechnicianYES"> 是 </label>
+				<input id="needTechnicianNO" type="radio" name="needTechnician" value="1" ng-model="addGoodsKindsInfo.state"> <label for="needTechnicianNO"> 否 </label>
+				<span ng-if="addGoodsKinds_needErr.isErr" ng-bind="addGoodsKinds_needErr.errInfo"></span>
+			</div>
+			<div class="add-goodskinds-btn-group">
+				<a class="sure" href="javascript:;" ng-click="makeAddGoodsKinds()">确定</a>
+			</div>
+		</div>
+		<!-- 关闭按钮 -->
+		<div class="add-goodskinds-view-close close-btn" ng-click="closeAddGoodsKindsView()">×</div>
+	</div>
+</div>

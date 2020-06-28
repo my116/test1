@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="projectB">
+<head>
+	<meta charset="UTF-8"> 
+	<object id="LODOP" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" style="position:fixed;z-index:-10"></object>
+	<script type="text/javascript">
+		var LODOP=document.getElementById("LODOP");
+	</script>
+	<title>JW_test</title>
+	<script type="text/javascript" src="{:C('HOME')}/lib/LodopFuncs.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/js/getSysUser.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/angular.min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/angular-route.min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/angular-animate.min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/laydate/laydate.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/timedropper.min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/angular-time-dropper-min.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/dtime.js"></script>
+	<script type="text/javascript" src="{:C('HOME')}/lib/echarts.js"></script>
+	<link rel="stylesheet" type="text/css" href="{:C('HOME')}/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="{:C('HOME')}/css/index.css">
+	<link rel="stylesheet" type="text/css" href="{:C('HOME')}/css/iconfont.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/cashier.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/member.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/goods.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/technician.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/system.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/finance.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/timedropper.min.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/dtime.css">
+	<link rel="stylesheet" href="{:C('HOME')}/css/loaders.css">
+</head>
+<body ng-controller="controller">
+<!-- header -->
+<div class="wrapper">
+	<header>
+		<div class="logo">
+			收银系统
+		</div>
+		<ul class="nav">
+			<li ng-class="{'active':nav[0]}" ng-if="sysPermissions.cashier"><a href="#/cashier">前台收银</a></li>
+			<li ng-class="{'active':nav[1]}" ng-if="sysPermissions.technician"><a href="#/technician">技师管理</a></li>
+			<li ng-class="{'active':nav[2]}" ng-if="sysPermissions.finance"><a href="#/finance">财务管理</a></li>
+			<li ng-class="{'active':nav[3]}" ng-if="sysPermissions.member"><a href="#/member">会员管理</a></li>
+			<li ng-class="{'active':nav[4]}" ng-if="sysPermissions.goods"><a href="#/goods">商品管理</a></li>
+			<li ng-class="{'active':nav[5]}" ng-if="sysPermissions.system"><a href="#/system">系统管理</a></li>
+			<li>
+				<a href="{:U('Login/Index/Logout')}">{{sysUser.userName}}</a>
+				<ul>
+					<li ng-click="showCashierHandover()" ng-if="sysPermissions.cashier">收银交班</li>
+					<li><a href="{:U('Login/Index/Logout')}">退出系统</a></li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="info" ng-show="headerInfo.roomPageIndex">
+			<li>
+				<i class="iconfont icon-wujiaoxing"></i>
+				<span>所拍状态统计</span>
+			</li>
+			<li>
+				<i class="color-point"></i>
+				<span>未打扫</span>
+			</li>
+			<li>
+				<i class="color-point"></i>
+				<span>预约</span>
+			</li>
+			<li>
+				<i class="color-point"></i>
+				<span>占用</span>
+			</li>
+		</ul>
+		<div class="back-cashier-index" ng-show="headerInfo.roomPageOccupy" ng-click="backCashierIndex()">退出房间详情</div>
+		<div class="back-cashier-index" ng-show="headerInfo.memberPageInfo" ng-click="backMemberIndex()">退出会员详情</div>
+	</header>
+</div>
+
+<!-- content -->
+<div class="wrapper-content">
+	<div class="content">
+		<div ng-view></div>
+	</div>
+</div>
+
+<!-- footer -->
+<div class="wrapper footer" id="footer" ng-if="false">
+	<footer>
+		<div class="introduce">
+			<p class="title">收银系统</p>
+			<p class="text">君旺科技倾力打造的收银系统平台<br>及时统计当天的营业额，统计库商品的数量。对房间状态安排的合理，减少人工成本<br>降低员工劳动成本。</p>
+		</div>
+		<div class="information">
+			<div class="code">
+				<img src="{:C('HOME')}/images/code.png" alt="君旺科技" title="扫描二维码关注君旺科技">
+			</div>
+			<div class="contact-us">
+				<div class="tel">
+					<img src="{:C('HOME')}/images/tel.png" alt="联系电话" title="联系我们">
+				</div>
+				<p class="text">成都君旺科技有限公司<br>联系电话：028-588624/5125212<br>地址：成华区司马康城三单元1503</p>
+			</div>
+		</div>
+	</footer>
+</div>
+
+<!-- 遮罩层 -->
+<div ng-show="maskLayer" class="mask-layer"></div>
+<!-- loading -->
+<div ng-show="loadingLayer" class="loading-layer">
+	<div data-loader="circle"></div>
+</div>
+
+<!-- 收银交班 -->
+<div class="handover" ng-if="alertView.cashierHandoverView">
+	<div class="title">
+		<p>交班信息</p>
+	</div>
+	<div class="info">
+		<span>当前交班员： <span class="bold">李红</span></span>
+		<span>当班时间： <span class="bold">2016-12-11 12:00</span> 至 <span class="bold">2016-12-11 18:00</span></span>
+		<span>前班结余： <span class="bold">718.00</span> 元</span>
+	</div>
+	<div class="data">
+		<table>
+			<tr>
+				<td class="bold"><i class="icon"></i>营业额</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>现金：<span class="bold">18,320.00</span></td>
+				<td>pos：<span class="bold">7,880.00</span></td>
+				<td>微信：<span class="bold">3,120.00</span></td>
+				<td>会员：<span class="bold">8,670.00</span></td>
+				<td>营业额：<span class="total">37,990.00</span></td>
+			</tr>
+			<tr>
+				<td class="bold"><i class="icon"></i>充值额</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>现金：<span class="bold">5,000.00</span></td>
+				<td>pos：<span class="bold">3,000.00</span></td>
+				<td>微信：<span class="bold">2,000.00</span></td>
+				<td></td>
+				<td>会员充值：<span class="total">10,000.00</span></td>
+			</tr>
+		</table>
+		<p class="totalMoney">合计现金收款：<span>23,320.00</span> 元</p>
+		<div class="input-group">
+			<label for="handover_handIn">上交现金收款</label>
+			<input type="number" id="handover_handIn">
+			<span class="text">下交现金收款</span>
+			<span class="remain-money">1038.00</span>
+		</div>
+	</div>
+	<div class="btn-group">
+		<a class="sure" href="javascript:;" ng-click="makeHandover()">确定交班</a>
+		<a class="cancel" href="javascript:;" ng-click="closeCashierHandover()">取消</a>
+	</div>
+</div>
+
+<script type="text/javascript" src="{:C('HOME')}/js/index.js"></script>
+<script type="text/javascript">
+	var aaaaaa = 5;
+	window.onload = function(){
+		/*var window_height = window.innerHeight;
+		var body_height;
+		var footer = document.getElementById('footer');
+		setTimeout(function(){
+			body_height = document.getElementsByTagName('body')[0].clientHeight;
+			if(body_height + footer.offsetHeight < window_height){
+				console.log('小于',body_height,footer.offsetHeight,window_height);
+				footer.style.top = window_height - footer.offsetHeight + 'px';
+			}
+		},100)*/
+		aaaaaa = 6;
+	}
+	
+</script>
+</body>
+</html>

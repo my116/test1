@@ -1,0 +1,491 @@
+<div class="system">
+	<!-- 侧边栏导航 -->
+	<div class="system-sidebar">
+		<ul class="system-sidebar-list">
+			<li ng-class="{'selected':systemContent == 'pad'}" ng-click="systemContent = 'pad';changeFunction()"><i class="iconfont icon-pingban"></i><span>平板管理</span></li>
+			<li ng-class="{'selected':systemContent == 'hand'}" ng-click="systemContent = 'hand';changeFunction()"><i class="iconfont icon-shouhuanshuju"></i><span>手牌设置</span></li>
+			<li ng-class="{'selected':systemContent == 'room'}" ng-click="systemContent = 'room';changeFunction()"><i class="iconfont icon-home"></i><span>房间设置</span></li>
+			<li ng-class="{'selected':systemContent == 'user'}" ng-click="systemContent = 'user';changeFunction()"><i class="iconfont icon-yonghu"></i><span>账号设置</span></li>
+			<li ng-class="{'selected':systemContent == 'giving'}" ng-click="systemContent = 'giving';changeFunction()"><i class="iconfont icon-youhui"></i><span>充值优惠</span></li>
+			<li ng-class="{'selected':systemContent == 'member'}" ng-click="systemContent = 'member';changeFunction()"><i class="iconfont icon-1"></i><span>会员等级</span></li>
+			<li ng-class="{'selected':systemContent == 'goods'}" ng-click="systemContent = 'goods';changeFunction()"><i class="iconfont icon-shangpinfenlei"></i><span>商品分类</span></li>
+		</ul>
+	</div>
+
+	<div class="system-content" ng-switch="systemContent">
+		<!-- 平板管理 -->
+		<div class="wrap-box system-pad" ng-switch-default>
+			<div class="title">
+				<p>平板管理</p>
+			</div>
+			<a class="add-pad" href="javascript:;" ng-click="showAddPadView()">新 增</a>
+			<table class="pad-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>名称</td>
+						<td>设备账号</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="pad in systemPadInfo.padList" repeat-finish="renderFinish()">
+						<td>{{$index + 1}}</td>
+						<td>{{pad.padname}}</td>
+						<td>{{pad.padid}}</td>
+						<td><span ng-click="showDelPadView(pad.id,pad.padname)">删除</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 增加平板 -->
+			<div class="add-pad-view" ng-if="systemAlertView.addPadView">
+				<div class="add-pad-view-main">
+					<p class="title">添加平板</p>
+					<div class="input-group">
+						<label for="addPad_Name">名称</label>
+						<input id="addPad_Name" type="text" autocomplete="off" ng-model="addPadInfo.padName">
+						<span class="err-info" ng-show="addPad_nameErr.isErr" ng-bind="addPad_nameErr.errInfo"></span>
+					</div>
+					<div class="input-group">
+						<label for="addPad_password">密码</label>
+						<input id="addPad_password" type="text" onfocus="this.type='password'" autocomplete="off" ng-model="addPadInfo.padPassword" value="">
+						<span class="err-info" ng-show="addPad_passwordErr.isErr" ng-bind="addPad_passwordErr.errInfo"></span>
+					</div>
+					<div class="input-group">
+						<label for="addPad_repassword">重复密码</label>
+						<input id="addPad_repassword" type="text" onfocus="this.type='password'" autocomplete="off" ng-model="addPadInfo.padRepassword">
+						<span class="err-info" ng-show="addPad_repasswordErr.isErr" ng-bind="addPad_repasswordErr.errInfo"></span>
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeAddPad()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="add-pad-view-close close-btn" ng-click="closeAddPadView()">×</div>
+			</div>
+			<!-- 删除平板界面 -->
+			<div class="del-pad-view" ng-if="systemAlertView.delPadView">
+				<div class="del-pad-view-main">
+					<p class="info">确定删除名称为<span>{{delPadInfo.padName}}</span>的设备吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeDelPad()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="del-pad-view-close close-btn" ng-click="closeDelPadView()">×</div>
+			</div>
+		</div>
+		<!-- 手牌设置 -->
+		<div class="wrap-box system-hand" ng-switch-when="hand">
+			<div class="title">
+				<p>手牌设置</p>
+			</div>
+			<a href="javascript:;" class="add-hand" ng-click="showAddHandView()">新 增</a>
+			<table class="hand-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>手牌编号</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="hand in systemHandInfo.handList">
+						<td>{{$index + 1}}</td>
+						<td>{{hand.handname}}</td>
+						<td><span ng-click="showDelHandView(hand.id,hand.handname)">删除</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 增加手牌 -->
+			<div class="add-hand-view" ng-if="systemAlertView.addHandView">
+				<div class="add-hand-view-main">
+					<ul class="add-hand-way">
+						<li ng-class="{'selected': addHandWay == 'single'}" ng-click="changeAddHandWay('single')">添加</li>
+						<li ng-class="{'selected': addHandWay == 'lot'}" ng-click="changeAddHandWay('lot')">批量添加</li>
+					</ul>
+					<div class="add-hand-way-content" ng-switch="addHandWay">
+						<div class="lot" ng-switch-when="lot">
+							<div class="input-group">
+								<label for="">开始编号</label>
+								<input type="text" ng-model="systemAddHandInfo.handNumber_start">
+							</div>
+							<div class="input-group">
+								<label for="">结束编号</label>
+								<input type="text" ng-model="systemAddHandInfo.handNumber_end">
+							</div>
+						</div>
+						<div class="single" ng-switch-default>
+							<div class="input-group">
+								<label for="">手牌编号</label>
+								<input type="text" ng-model="systemAddHandInfo.handNumber">
+							</div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeSysAddHand()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="add-hand-view-close close-btn" ng-click="closeAddHandView()">×</div>
+			</div>
+			<!-- 删除手牌 -->
+			<div class="make-sure-view" ng-if="systemAlertView.delHandView">
+				<div class="make-sure-view-main">
+					<p class="info">确定删除编号为<span>{{sysDelHandInfo.name}}</span>的手牌吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeSysDelHand()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="make-sure-view-close close-btn" ng-click="closeDelHandView()">×</div>
+			</div>
+		</div>
+
+		<!-- 房间设置 -->
+		<div class="wrap-box system-room" ng-switch-when="room">
+			<div class="title">
+				<p>房间设置</p>
+			</div>
+			<table class="room-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>房间名称</td>
+						<td>终端号</td>
+						<td>床位</td>
+						<td>房间状态</td>
+						<td>操作</td>
+					</tr>	
+				</thead>
+				<tbody>
+					<tr ng-repeat="room in sysRoomInfo.roomList">
+						<td>{{$index + 1}}</td>
+						<td>{{room.terminalname}}</td>
+						<td>{{room.sn}}</td>
+						<td>{{room.bed}}</td>
+						<td>{{room.set | filterRoomSet}}</td>
+						<td><span ng-click="showEditRoomView(room.id,room.terminalname,room.bed,room.set)">修改</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 修改房间数据界面 -->
+			<div class="edit-room-view" ng-if="systemAlertView.editRoomView">
+				<div class="edit-room-view-main">
+					<p class="title">修改</p>
+					<div class="input-group room-terminal">
+						<div class="left">
+							<p>房间名称</p>
+						</div>
+						<div class="right">
+							<input type="text" value="{{sysChangeRoomInfo.terminalname}}" ng-model="sysChangeRoomInfo.terminalname">
+						</div>
+					</div>
+					<div class="input-group room-name">
+						<div class="left">
+							<p>房间床位</p>
+						</div>
+						<div class="right">
+							<input type="text" value="{{sysChangeRoomInfo.bed}}" ng-model="sysChangeRoomInfo.bed">
+						</div>
+					</div>
+					<div class="input-group room-bed">
+						<div class="left">
+							<p>启用房间</p>
+						</div>
+						<div class="right">
+							<select name="" id="" ng-model="sysChangeRoomInfo.set">
+								<option value="1">启用房间</option>
+								<option value="2">停用房间</option>
+							</select>
+						</div>
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeSysChangeRoomInfo()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="edit-room-view-close close-btn" ng-click="closeEditRoomView()">×</div>
+			</div>
+		</div>
+
+		<!-- 账号设置 -->
+		<div class="wrap-box system-user" ng-switch-when="user">
+			<div class="title">
+				<p>账号设置</p>
+			</div>
+			<a href="javascript:;" class="add-user" ng-click="showAddUserView()">新增账号</a>
+			<table class="user-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>姓名</td>
+						<td>手机号</td>
+						<td>权限</td>
+						<td class="func">操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in sysUserInfo.userList">
+						<td>{{$index + 1}}</td>
+						<td>{{user.names}}</td>
+						<td>{{user.phone}}</td>
+						<td>{{user.permissions | filterUserPermissions}}</td>
+						<td class="func"><span ng-click="showEditUserView(user)">修改</span> <span ng-click="showDelUserView(user.id,user.names,user.phone)">删除</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 账号信息编辑 -->
+			<div class="edit-user-view" ng-if="systemAlertView.editUserView">
+				<div class="edit-user-view-main">
+					<p class="title">{{sysEditUserInfo.title}}</p>
+					<div class="edit-user-content">
+						<div class="left">
+							<div class="input-group name">
+								<label for="">名称</label>
+								<input type="text" ng-model="sysEditUserInfo.userName">
+							</div>
+							<div class="input-group phone">
+								<label for="">手机号</label>
+								<input type="text" ng-model="sysEditUserInfo.userPhone" ng-disabled="sysEditUserInfo.userPhone_unable">
+							</div>
+							<div class="input-group code" ng-if="sysEditUserInfo.title == '新增账号'">
+								<label for="">验证码</label>
+								<input type="text" ng-model="sysEditUserInfo.securityCode">
+								<a id="getSysUserSecurityCode_btn" ng-class="{'unable': !getSysUserSecurityCodeInfo.able}" href="javascript:;" ng-click="getSysUserSecurityCode()">获取</a>
+							</div>
+						</div>
+						<div class="right">
+							<label for="">选择权限</label>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.cashier == '1'}" ng-click="setSysUserPermissions('cashier')"><i class="iconfont icon-check"></i></span> 前台收银
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.technician == '2'}" ng-click="setSysUserPermissions('technician')"><i class="iconfont icon-check"></i></span> 技师管理
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.finance == '3'}" ng-click="setSysUserPermissions('finance')"><i class="iconfont icon-check"></i></span> 财务管理
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.member == '4'}" ng-click="setSysUserPermissions('member')"><i class="iconfont icon-check"></i></span> 会员管理
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.goods == '5'}" ng-click="setSysUserPermissions('goods')"><i class="iconfont icon-check"></i></span> 商品管理
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.system == '6'}" ng-click="setSysUserPermissions('system')"><i class="iconfont icon-check"></i></span> 系统管理
+							</div>
+							<div class="item">
+								<span ng-class="{'selected':sysEditUserInfo.permissions.chargeback == '7'}" ng-click="setSysUserPermissions('chargeback')"><i class="iconfont icon-check"></i></span> 退单权限
+							</div>
+						</div>
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeSysEditUser()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="edit-user-view-close close-btn" ng-click="closeEditUserView()">×</div>
+			</div>
+			<!-- 删除账号 -->
+			<div class="make-sure-view" ng-if="systemAlertView.delUserView">
+				<div class="make-sure-view-main">
+					<p class="info">确定删除<span>名称：{{sysDelUserInfo.name}}，号码：{{sysDelUserInfo.phone}}</span>的账户吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeSysDelUser()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="make-sure-view-close close-btn" ng-click="closeDelUserView()">×</div>
+			</div>
+			<!-- 二维码绑定 -->
+			<div class="code-image" ng-if="systemAlertView.codeImageView">
+				<img id="sysUserCodeImg" src="http://www.unon.vip/Home/Index/AdminUserBindingWechat?0.40704382855858023" alt="微信扫描" data-userid="">
+				<div class="image-close close-btn" ng-click="closeSysCodeImageView()">×</div>
+			</div>
+		</div>
+
+		<!-- 会员充值赠送 -->
+		<div class="wrap-box system-giving" ng-switch-when="giving">
+			<div class="title">
+				<p>充值优惠</p>
+			</div>
+			<a href="javascript:;" class="add-giving" ng-click="showAddGivingView()">新增优惠</a>
+			<table class="giving-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>充值金额</td>
+						<td>赠送金额</td>
+						<td>有效期</td>
+						<td>享受折扣</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="giving in systemGivingInfo.givingList">
+						<td>{{$index + 1}}</td>
+						<td>{{giving.minmoney/100 | currency:''}}</td>
+						<td>{{giving.givingmoney/100 | currency:''}}</td>
+						<td>{{giving.starttime | filterTime:'-':'YY-MM-DD'}}至{{giving.endtime | filterTime:'-':'YY-MM-DD'}}</td>
+						<td>{{giving.state | filterGivingState}}</td>
+						<td><span ng-click="showDelGivingView(giving.id,giving.minmoney,giving.givingmoney)">删除</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 添加优惠 -->
+			<div class="add-giving-view" ng-if="systemAlertView.addGivingView">
+				<div class="add-giving-view-main">
+					<p class="title">添加优惠规则</p>
+					<div class="input-group money">
+						<label for="">充值金额</label>
+						<input type="number" ng-model="addGivingInfo.money_pay">
+						<label for="">赠送金额</label>
+						<input type="number" ng-model="addGivingInfo.money_giving">
+					</div>
+					<div class="input-group expiry-date">
+						<label for="">赠送有效期</label>
+						<input id="sysGivingTime_start" type="text" onfocus="laydate()" ng-model="addGivingInfo.givingTime_start">
+						<label for="">至</label>
+						<input id="sysGivingTime_end" type="text" onfocus="laydate()" ng-model="addGivingInfo.givingTime_end">
+					</div>
+					<div class="input-group discount">
+						<label for="">赠送是否享受折扣</label>
+						<div class="item">
+							<span ng-class="{'selected':addGivingInfo.isDiscount == '1'}" ng-click="selectDiscount('1')"><i class="iconfont icon-check"></i></span> 是
+						</div>
+						<div class="item">
+							<span ng-class="{'selected':addGivingInfo.isDiscount == '2'}" ng-click="selectDiscount('2')"><i class="iconfont icon-check"></i></span> 否
+						</div>
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeAddGiving()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="add-giving-view-close close-btn" ng-click="closeAddGivingView()">×</div>
+			</div>
+			<!-- 删除优惠 -->
+			<div class="make-sure-view" ng-if="systemAlertView.delGivingView">
+				<div class="make-sure-view-main">
+					<p class="info">确定删除<span>充{{delSysGivingIngo.money}}送{{delSysGivingIngo.givingMoney}}</span>的优惠充值规则吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeDelGiving()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="make-sure-view-close close-btn" ng-click="closeDelGivingView()">×</div>
+			</div>
+		</div>
+		
+		<!-- 会员等级 -->
+		<div class="wrap-box system-member" ng-switch-when="member">
+			<div class="title">
+				<p>会员等级</p>
+			</div>
+			<a href="javascript:;" class="add-member" ng-click="showAddMemberView()">新增会员等级</a>
+			<table class="member-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>等级名称</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in systemMemberInfo.classList">
+						<td>{{$index + 1}}</td>
+						<td>{{item.vipname}}</td>
+						<td class="func"><span ng-click="showEditMemberView(item.vipname,item.id)">修改</span> <span ng-click="showDelMemberView(item.id,item.vipname)">删除</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 编辑会员等级 -->
+			<div class="edit-member-view" ng-if="systemAlertView.editMemberView">
+				<div class="edit-member-view-main">
+					<p class="title">{{systemMemberInfo.editTitle}}</p>
+					<div class="input-group">
+						<label for="">会员等级名称</label>
+						<input type="text" ng-model="systemMemberInfo.editInfo.name">
+					</div>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeEditMember()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="edit-member-view-close close-btn" ng-click="closeEditMemberView()">×</div>
+			</div>
+			<!-- 删除会员等级 -->
+			<div class="make-sure-view" ng-if="systemAlertView.delMemberView">
+				<div class="make-sure-view-main">
+					<p class="info">确定删除名称为<span>{{delMemberInfo.vipname}}</span>的会员等级吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeDelMember()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="make-sure-view-close close-btn" ng-click="closeDelMemberView()">×</div>
+			</div>
+		</div>
+		
+		<!-- 商品分类 -->
+		<div class="wrap-box system-goods" ng-switch-when="goods">
+			<div class="title">
+				<p>商品分类</p>
+			</div>
+			<a href="javascript:;" class="add-goods" ng-click="showAddGoodsView()">新增商品分类</a>
+			<table class="goods-list">
+				<thead>
+					<tr>
+						<td>序号</td>
+						<td>商品分类名称</td>
+						<td>是否需要技师</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="kind in systemGoodsInfo.goodsKindsList">
+						<td>{{$index + 1}}</td>
+						<td>{{kind.catename}}</td>
+						<td>{{kind.state | filterNeedTechnician}}</td>
+						<td class="func"><span ng-click="showEditGoodsView(kind.catename,kind.id,kind.state)">修改</span> <span ng-click="showDelGoodsView(kind.id,kind.catename)">删除</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 添加商品分类 -->
+			<div class="add-goodskinds-view" ng-if="systemAlertView.editGoodsView">
+				<div class="add-goodskinds-view-main">
+					<p class="title">{{systemGoodsInfo.editTitle}}</p>
+					<div class="input-group">
+						<label class="goodskinds-name" for="">分类名称</label>
+						<input type="text" ng-model="systemGoodsInfo.editInfo.kindName">
+						<span ng-if="addGoodsKinds_nameErr.isErr" ng-bind="addGoodsKinds_nameErr.errInfo"></span>
+					</div>
+					<div class="input-group" ng-class="{'hidden':systemGoodsInfo.editTitle == '修改分类'}">
+						<p>是否需要技师</p>
+						<input id="needTechnicianYES" type="radio" name="needTechnician" value="2" ng-model="systemGoodsInfo.editInfo.needTechnician"> <label for="needTechnicianYES"> 是 </label>
+						<input id="needTechnicianNO" type="radio" name="needTechnician" value="1" ng-model="systemGoodsInfo.editInfo.needTechnician"> <label for="needTechnicianNO"> 否 </label>
+						<span ng-if="addGoodsKinds_needErr.isErr" ng-bind="addGoodsKinds_needErr.errInfo"></span>
+					</div>
+					<div class="add-goodskinds-btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeEditGoods()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="add-goodskinds-view-close close-btn" ng-click="closeEditGoodsView()">×</div>
+			</div>
+			<!-- 删除商品分类 -->
+			<div class="make-sure-view" ng-if="systemAlertView.delGoodsView">
+				<div class="make-sure-view-main">
+					<p class="info">确定删除名称为<span>{{delGoodsKindInfo.kindName}}</span>的商品分类吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeDelGoods()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="make-sure-view-close close-btn" ng-click="closeDelGoodsView()">×</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

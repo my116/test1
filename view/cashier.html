@@ -1,0 +1,607 @@
+<div class="cashier">
+	<!-- room-page-index -->
+	<div class="room-page-index" ng-show="roomPageShow[0]">
+		<!-- <h1 class="title">房间号：</h1> -->
+		<table class="room">
+			<tr ng-repeat="roomLine in rooms" ng-init="outerIndex = $index" repeat-finish="renderFinish()">
+				<td ng-repeat="room in roomLine" ng-class="{'roomState1': room.state == 1,'roomState2':room.state == 2,'roomState3':room.state == 3}" ng-mouseover="roomMouseover(outerIndex,$index)" ng-mouseleave="roomMouseleave(outerIndex,$index)">
+					<span class="room-number" ng-if="room.state == 1 || room.state == 2 || room.state == 3">{{room.terminalname}}</span>
+					<!-- <span ng-if="room.state == 4"><strong>{{room.bed}}</strong>人间</span> -->
+					<span ng-if="room.state == 4"><strong>{{room.terminalname}}</strong></span>
+					<span class="room-info" ng-if="room.state == 1 || room.state == 2 || room.state == 3">(<span class="room-person">{{room.roomPerson}}</span>/<span class="room-count">{{room.bed}}</span>)</span>
+					<i ng-if="room.state == 1 || room.state == 2 || room.state == 3" class="iconfont icon-home"></i>
+					<div class="room-hover">
+						<ul class="room-empty" ng-show="room.roomHover" ng-if="room.state != 1 && room.state != 2 && room.state != 3">
+							<li ng-click="showRoomUsing(room.id,room.terminalname,room.bed)">开房</li>
+							<li ng-click="showRoomAppointment(room.id,room.terminalname)">预约</li>
+						</ul>
+						<ul class="room-occupy" ng-if="room.state == 1 || room.state == 2 || room.state == 3" ng-show="room.roomHover">
+							<li ng-click="showRoomOccupyInfo(room.id)" ng-if="room.state == 2">详情</li>
+							<li ng-click="showRoomAppointmentInfoView(room.id,room.terminalname,room.bed)" ng-if="room.state == 1">详情</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!-- 房间结账、手牌结账、退单按钮 -->
+		<div class="handle">
+			<a href="javascript:;" ng-click="showCheckOutServiceView(1)">房间结账</a>
+			<a href="javascript:;" ng-click="showCheckOutServiceView(2)">手牌结账</a>
+			<a href="javascript:;" ng-click="showChargebackView()">退单</a>
+		</div>
+
+		<!-- 房间预约 -->
+		<div class="room-appointment" ng-show="roomAppointment">
+			<div class="room-appointment-main">
+				<div class="room-appointment-title">
+					<p>预约登记<span>({{roomAppointmentInfo.roomNumber}})</span></p>
+				</div>
+				<form action="">
+					<div class="appointment-form-group">
+						<label for="userName">客人姓名:</label>
+						<input type="text" id="userName" ng-model="roomAppointmentInfo.userName">
+						<span class="appointment-err" ng-show="roomAppointmentErr.userName">* 客人姓名不能为空</span>
+					</div>
+					<div class="appointment-form-group">
+						<label for="userPhone">联系电话:</label>
+						<input type="text" id="userPhone" ng-model="roomAppointmentInfo.userPhone">
+						<span class="appointment-err" ng-show="roomAppointmentErr.userPhone">* 联系电话格式错误</span>
+					</div>
+					<div class="appointment-form-group">
+						<label for="appointmentTime">预约时间:</label>
+						<input id="appointmentTime" ng-model="roomAppointmentInfo.time">
+						<span class="appointment-err" ng-show="roomAppointmentErr.time">* 预约时间错误</span>
+					</div>
+					<p class="appointment-marked-words">温馨提示：到达预定时间自动取消预定</p>
+					<div class="appointment-remark">
+						<label for="appointmentRemark">备注:</label>
+						<textarea name="" id="appointmentRemark" cols="30" rows="10" ng-model="roomAppointmentInfo.userRemark"></textarea>
+					</div>
+				</form>
+				<div class="appointment-btn-group">
+					<a class="appointment-sure" href="javascript:;" ng-click="makeRoomAppointment()">预约</a>
+					<a class="appointment-cancel" href="javascript:;" ng-click="closeRoomAppointment()">取消</a>
+				</div>
+			</div>
+
+			<!-- 关闭按钮 -->
+			<div class="room-appointment-close close-btn" ng-click="closeRoomAppointment()">×</div>
+		</div>
+
+		<!-- 开房间 -->
+		<div class="room-using" ng-show="roomUsing">
+			<div class="room-using-main">
+				<div class="room-using-title">
+					<p>开房间<span>({{roomUsingInfo.roomNumber}})</span></p>
+				</div>
+				<form action="">
+					<div class="using-form-group">
+						<label for="userHand">输入手牌:</label>
+						<input type="text" id="userHand" ng-keydown="isAddUserHand($event)" ng-model="roomUsingInfo.newUserHand" autocomplete="off">
+						<a class="btn-add-userhand" href="javascript:;" ng-click="addUserHand()">添加</a>
+						<span class="using-err" ng-show="roomUsingErr.isErr" ng-bind="roomUsingErr.errInfo"></span>
+					</div>
+					<p class="using-marked-words">注：输入手牌后，按回车添加手牌</p>
+				</form>
+				<div class="using-userhands">
+					<table class="using-userhands-list">
+						<tr class="using-userhands-list-title">
+							<td>序号</td>
+							<td>开房手牌</td>
+						</tr>
+						<tr ng-repeat="hand in roomUsingInfo.userHands">
+							<td>{{$index + 1}}</td>
+							<td>{{hand}}<span class="userhand-delete" ng-click="deleteUserHand(hand)" title="删除该手牌">×</span></td>
+						</tr>
+					</table>
+				</div>
+				<div class="using-btn-group">
+					<a class="using-sure" href="javascript:;" ng-click="makeRoomUsing()">确定</a>
+					<a class="using-cancel" href="javascript:;" ng-click="closeRoomUsing()">取消</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="room-using-close close-btn" ng-click="closeRoomUsing()">×</div>
+		</div>
+
+		<!-- 房间预约详情界面 -->
+		<div class="appointment-info-view" ng-if="cashierAlertView.roomAppointmentInfoView">
+			<div class="appointment-info-view-main">
+				<div class="title">房间预约详情<span>({{roomAppointmentInformation.roomName}})</span></div>
+				<div class="input-group">
+					<div class="left">
+						<label for="roomAppointmentInfo_UserName">客人姓名：</label>
+					</div>
+					<div class="right">
+						<input id="roomAppointmentInfo_UserName" type="text" disabled="disabled" ng-model="roomAppointmentInformation.userName">
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="left">
+						<label for="roomAppointmentInfo_UserTel">联系电话：</label>
+					</div>
+					<div class="right">
+						<input id="roomAppointmentInfo_UserTel" type="text" disabled="disabled" ng-model="roomAppointmentInformation.userTel">
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="left">
+						<label for="roomAppointmentInfo_UserTime">预定时间：</label>
+					</div>
+					<div class="right">
+						<input id="roomAppointmentInfo_UserTime" type="text" disabled="disabled" value="{{roomAppointmentInformation.time | filterTime}}">
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="left">
+						<label for="roomAppointmentInfo_UserRemark">备注：</label>
+					</div>
+					<div class="right">
+						<textarea name="" id="roomAppointmentInfo_UserRemark" disabled="disabled" ng-bind="roomAppointmentInformation.remarks"></textarea>
+					</div>
+				</div>
+				<div class="btn-group">
+					<a class="sure" href="javascript:;" ng-click="appointmentToUsing()">开始使用</a>
+					<a class="cancel" href="javascript:;" ng-click="cancelRoomAppointment()">取消预约</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="appointment-info-view-close close-btn" ng-click="closeRoomAppointmentInfoView()">×</div>
+		</div>
+		<!-- 取消预约确定界面 -->
+		<div class="mask-layer cancel-room-appointment-view" ng-if="cashierAlertView.cancelRoomAppointment">
+			<div class="del-pad-view">
+				<div class="del-pad-view-main">
+					<p class="info">确定取消<span>{{roomAppointmentInformation.userName}}</span>客人的房间预约吗？</p>
+					<div class="btn-group">
+						<a class="sure" href="javascript:;" ng-click="makeCancelRoomAppointment()">确定</a>
+					</div>
+				</div>
+				<!-- 关闭按钮 -->
+				<div class="cancel-room-appointment-close close-btn" ng-click="closeCancelRoomAppointment()">×</div>
+			</div>
+		</div>
+
+		<!-- 退单 chargeback -->
+		<div class="chargeback" ng-show="cashierAlertView.chargebackView">
+			<div class="chargeback-main">
+				<div class="title">退单</div>
+				<div class="input-group">
+					<label for="chargebackHandID">请输入手牌号:</label>
+					<input class="chargeback-handid" id="chargebackHandID" type="text" ng-focus="chargebackInfo.selectListShow = true" ng-blur="chargebackInfo.selectListShow = false" ng-model="chargebackInfo.searchText">
+					<a class="chargeback-search" href="javascript:;" ng-click="chargebackSearch()">查询</a>
+					<!-- 可以退单的手牌列表界面 -->
+					<div class="select-list" ng-if="chargebackInfo.selectListShow">
+						<ul>
+							<li ng-repeat="item in chargebackInfo.selectList | orderBy:'name':false | filter:{name:chargebackInfo.searchText}" value="{{item.id}}" ng-mousedown="selectNeedChargeback(item.id,item.name)">{{item.name}}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="chargeback-list-thead">
+					<table>
+						<tr>
+							<td class="userhand">手牌号</td>
+							<td class="room-number">房间号</td>
+							<td class="goods-name">消费项目</td>
+							<td class="goods-price">单价</td>
+							<td class="goods-number">消费数量</td>
+							<td class="goods-time">消费时间</td>
+							<td class="goods-subtotal">小计</td>
+							<td class="chargeback-func">操作</td>
+						</tr>
+					</table>
+				</div>
+				<div class="chargeback-list">
+					<table>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+						<tr>
+							<td class="userhand">003</td>
+							<td class="room-number">002</td>
+							<td class="goods-name">泰式足浴</td>
+							<td class="goods-price">￥50</td>
+							<td class="goods-number">2</td>
+							<td class="goods-time">2012-2-30 14:07:08</td>
+							<td class="goods-subtotal">￥100</td>
+							<td class="chargeback-func"><span>退单</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="chargeback-close close-btn" ng-click="closeChargebackView()">×</div>
+		</div>
+
+		<!-- 结账界面 checkOutService -->
+		<div class="roompay" ng-show="cashierAlertView.checkOutServiceView">
+			<div class="roompay-main">
+				<div class="title" ng-bind="checkOutServiceInfo.titleName"></div>
+				<div class="roompay-consumption-info">
+					<div class="input-group">
+						<label class="" for="roompayRoomID">请输入查询信息</label>
+						<input class="roompay-roomid" type="text" id="roompayRoomID" placeholder="{{checkOutServiceInfo.searchPlaceholder}}" ng-focus="checkOutServiceInfo.selectListShow = true" ng-blur="checkOutServiceInfo.selectListShow = false" ng-model="checkOutServiceInfo.searchText">
+						<button class="roompay-search">添加</button>
+						<!-- 被选择了的需要结账的房间或者手牌 -->
+						<div class="selected-list-wrap">
+							<div class="selected-list">
+								<span ng-repeat="selected in checkOutServiceInfo.selectedList">{{selected.name}}<i ng-click="removeNeedPay(selected.id)">×</i></span>
+							</div>
+						</div>
+						<!-- 可以结账的手牌或者房间 -->
+						<div class="select-list" ng-if="checkOutServiceInfo.selectListShow">
+							<ul>
+								<li ng-repeat="item in checkOutServiceInfo.selectList | orderBy:'name':false | filter:{name:checkOutServiceInfo.searchText}" value="{{item.id}}" ng-mousedown="selectNeedPay(item.id,item.name)">{{item.name}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="roompay-list-thead">
+						<table>
+							<tr>
+								<td class="userhand">手牌号</td>
+								<td class="goods-name">消费项目</td>
+								<td class="goods-price">单价/加钟价</td>
+								<td class="goods-number">消费数量</td>
+								<td class="goods-time">消费时间</td>
+								<td class="goods-subtotal">小计</td>
+							</tr>
+						</table>
+					</div>
+					<div class="roompay-list-body-box">
+						<div class="roompay-list-body">
+							<table>
+								<tbody ng-repeat="hand in checkOutServiceInfo.handList">
+									<tr ng-repeat="item in hand.consumption" ng-class="{'giveup': item.giveup == '2'}">
+										<td class="userhand">{{hand.name}}</td>
+										<td class="goods-name">{{item.names}}</td>
+										<td class="goods-price">{{item.money/100 | currency:'￥'}} / {{item.addmoney/100 | currency:'￥'}}</td>
+										<td class="goods-number">{{item.number}}</td>
+										<td class="goods-time">{{item.times | filterTime:'.'}}</td>
+										<td class="goods-subtotal">{{item.subtotal/100 | currency:'￥'}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="roompay-way">
+					<div class="top">
+						<p>结账手牌:<span ng-bind="checkOutServiceInfo.needPayNumber">2</span>个</p>
+						<p>合计金额:<span class="roompay-total" ng-bind="checkOutServiceInfo.totalMoney/100 | currency:'￥'"></span></p>
+					</div>
+					<div class="roompay-way-content">
+						<!-- 现金支付 -->
+						<div class="cash-pay pay-way" ng-class="{'select':checkOutServiceInfo.payType == 'cash'}" ng-click="selectPayType('cash')">
+							<p class="pay-way-text">现金支付</p>
+						</div>
+						<!-- 微信支付 -->
+						<div class="weixin-pay pay-way" ng-class="{'select':checkOutServiceInfo.payType == 'weixin'}" ng-click="selectPayType('weixin')">
+							<p class="pay-way-text">微信支付</p>
+						</div>
+						<!-- 银联支付 -->
+						<div class="bank-pay pay-way" ng-class="{'select':checkOutServiceInfo.payType == 'bank'}" ng-click="selectPayType('bank')">
+							<p class="pay-way-text">银联支付</p>
+						</div>
+						<!-- 会员支付 -->
+						<div class="vip-pay pay-way" ng-class="{'select':checkOutServiceInfo.payType == 'vip'}" ng-click="selectPayType('vip')">
+							<p class="pay-way-text">会员支付</p>
+						</div>
+						<!-- 找零 -->
+						<div class="input-group" ng-if="checkOutServiceInfo.payType == 'cash'">
+							<label for="roompayCashMoney">实收金额:</label>
+							<input class="cash-money" id="roompayCashMoney" type="number" ng-model="checkOutServiceInfo.collectMoney">
+							<label for="">找零</label>
+							<span ng-bind="checkOutServiceInfo.changeMoney | currency:'￥'"></span>
+						</div>
+						<!-- 微信二维码 -->
+						<div class="weixin-code" ng-if="checkOutServiceInfo.payType == 'weixin' || checkOutServiceInfo.payType == 'vip'">
+							<img id="wxPayCode" src="{{checkOutServiceInfo.payCodeImg}}" alt="">
+						</div>
+						<!-- 结账按钮 -->
+						<a class="roompay-btn" href="javascript:;" ng-click="makeCheckOutService()">结账</a>
+					</div>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="roompay-close close-btn" ng-click="closeCheckOutServiceView()">×</div>
+		</div>
+	</div>
+
+	<!-- room-occupy-page 占用房间详情 -->
+	<div class="room-page-occupy" ng-show="roomPageShow[1]">
+		<p class="occupy-room-number">房间号 (<span ng-bind="roomOccupyInfo.roomNumber"></span>)</p>
+		<div class="occupy-userhands">
+			<dl ng-repeat="userHand in roomOccupyInfo.roomHandsInfo" ng-click="selectUserHand($index)" ng-class="{'userhand-selected':selectHandsInfo.userHandSelected[$index]}">
+				<dt><i class="iconfont icon-shouhuanshuju"></i></dt>
+				<dd>{{userHand.userHand}}</dd>
+			</dl>
+		</div>
+		<div class="occupy-btn-group">
+			<a href="javascript:;" ng-click="showAddConsumptionView()" ng-class="{'unable-click':unableClickAddConsumption}">增加消费</a>
+			<a href="javascript:;" ng-click="showContinueAddUserhandView()">追加宾客</a>
+			<a href="javascript:;" ng-click="showChangeRoomNumberView()">调换房间</a>
+		</div>
+		<p class="occupy-consumption-title">消费明细表</p>
+		<p class="occupy-room-start-time">房间启用时间：<span>{{roomOccupyInfo.roomStartTime | filterTime}}</span></p>
+		<table class="occupy-consumption-list">
+			<thead>
+				<tr>
+					<td class="hand-number">手牌号</td>
+					<td class="goods-name">消费项目</td>
+					<td class="goods-price">消费单价</td>
+					<td class="goods-number">消费数量</td>
+					<td class="buy-time">消费时间</td>
+					<td class="goods-subtotal">消费金额</td>
+				</tr>
+			</thead>
+			<tbody ng-repeat="user in roomOccupyInfo.roomHandsInfo" ng-show="selectHandsInfo.userHandSelected[$index]">
+				<tr ng-repeat="item in user.consumption" ng-class="{'giveup':item.giveup == '2'}" repeat-finish="renderFinish()">
+					<td class="hand-number">{{user.userHand}}</td>
+					<td class="goods-name">{{item.names}}</td>
+					<td class="goods-price">{{item.money/100 | currency:'￥'}}</td>
+					<td class="goods-number">{{item.number}}</td>
+					<td class="buy-time">{{item.times | filterTime}}</td>
+					<td class="goods-subtotal">{{item.money * item.number / 100 | currency:'￥'}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- 调换房间界面 -->
+		<div class="change-room-view" ng-show="cashierAlertView.changeRoomNumberView">
+			<div class="change-room-main">
+				<p class="input-group">原房间：{{changeRoomNumberInfo.roomNumber}}</p>
+				<div class="input-group">
+					<label for="changeRoomNumber">调整为：</label>
+					<select id="changeRoomNumber" ng-model="changeRoomNumberInfo.newRoomID">
+						<option value="">-- 请选择 --</option>
+						<option ng-repeat="room in roomsEmpty" value="{{room.id}}" ng-bind="room.terminalname"></option>
+					</select>
+					<span class="change-room-err" ng-show="changeRoomNumberErr.isErr" ng-bind="changeRoomNumberErr.errInfo"></span>
+				</div>
+				<div class="input-group btn-group">
+					<a class="btn-sure" href="javascript:;" ng-click="makeChangeRoomNumber()">确定</a>
+					<a class="btn-cancel" href="javascript:;" ng-click="closeChangeRoomNumberView()">取消</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="close-btn change-room-view-close" ng-click="closeChangeRoomNumberView()">×</div>
+		</div>
+		<!-- 增加宾客界面 -->
+		<div class="room-using" ng-show="cashierAlertView.continueAddUserhandView">
+			<div class="room-using-main">
+				<div class="room-using-title">
+					<p>增加宾客<span>({{continueAddUserhandInfo.roomNumber}})</span></p>
+				</div>
+				<form action="">
+					<div class="using-form-group">
+						<label for="userHand">输入手牌:</label>
+						<input type="text" ng-keydown="isContinueAddUserhand($event)" ng-model="continueAddUserhandInfo.newUserHand" autocomplete="off">
+						<a class="btn-add-userhand" href="javascript:;" ng-click="continueAddUserhand()">添加</a>
+						<span class="using-err" ng-show="continueAddUserhandErr.isErr" ng-bind="continueAddUserhandErr.errInfo"></span>
+					</div>
+					<p class="using-marked-words">注：输入手牌后，按回车添加手牌</p>
+				</form>
+				<div class="using-userhands">
+					<table class="using-userhands-list">
+						<tr class="using-userhands-list-title">
+							<td>序号</td>
+							<td>开房手牌</td>
+						</tr>
+						<tr ng-repeat="hand in continueAddUserhandInfo.userHands">
+							<td>{{$index + 1}}</td>
+							<td>{{hand}}</td>
+						</tr>
+						<tr ng-repeat="hand in continueAddUserhandInfo.newUserHands">
+							<td>{{continueAddUserhandInfo.userHands.length + $index + 1}}</td>
+							<td>{{hand}}<span class="userhand-delete" ng-click="deleteNewUserhands(hand)" title="删除该手牌">×</span></td>
+						</tr>
+					</table>
+				</div>
+				<div class="using-btn-group">
+					<a class="using-sure" href="javascript:;" ng-click="makeContinueAddUserhand()">确定</a>
+					<a class="using-cancel" href="javascript:;" ng-click="closeContinueAddUserhandView()">取消</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="room-using-close close-btn" ng-click="closeContinueAddUserhandView()">×</div>
+		</div>
+		<!-- 增加服务界面 -->
+		<div class="add-consumption" ng-show="cashierAlertView.addConsumptionView">
+			<div class="add-consumption-main">
+				<div class="add-consumption-left">
+					<div class="title">
+						<p>增加消费</p>
+						<a href="javascript:;">搜索</a>
+						<input class="search-goods" type="text" ng-model="addConsumptionInfo.searchText" placeholder="输入商品名称">
+					</div>
+					<div class="goods-type-nav">
+						<ul>
+							<li ng-class="{'select':addConsumptionInfo.selectGoodsKind == ''}" ng-click="addConsumptionInfo.selectGoodsKind = ''">全部</li>
+							<li ng-repeat="goodsKind in addConsumptionInfo.goodsKindsList" ng-class="{'select':goodsKind.id == addConsumptionInfo.selectGoodsKind}" ng-click="addConsumptionInfo.selectGoodsKind = goodsKind.id">{{goodsKind.catename}}</li>
+						</ul>
+					</div>
+					<div class="all-goods-list">
+						<table class="all-goods-list-thead">
+							<tr>
+								<td class="item-number">编号</td>
+								<td class="goods-name">名称</td>
+								<td class="goods-price">单价</td>
+							</tr>
+						</table>
+						<div class="all-goods-list-body-box">
+							<div class="all-goods-list-body">
+								<table>
+									<tr ng-repeat="goods in addConsumptionInfo.allGoodsList | filter:filterAddConsumptionGoods()" ng-click="addConsumption(goods.serverstime,goods.category,goods.pname,goods.id,goods.money)">
+										<td class="item-number">{{$index + 1}}</td>
+										<td class="goods-name">{{goods.pname}}</td>
+										<td class="goods-price">{{goods.money/100 | currency:'￥'}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="add-consumption-right">
+					<div class="title">
+						<p>宾客手牌号:<span ng-bind="addConsumptionInfo.userHand"></span></p>
+					</div>
+					<div class="hand-goods-list">
+						<table class="hand-goods-list-thead">
+							<tr>
+								<td class="item-number">序号</td>
+								<td class="goods-name">名称</td>
+								<td class="goods-technician">技师</td>
+								<td class="goods-price">单价</td>
+								<td class="goods-number">数量</td>
+								<td class="goods-subtotal">小计</td>
+								<td class="item-func">操作</td>
+							</tr>
+						</table>
+						<div class="hand-goods-list-body-box">
+							<div class="hand-goods-list-body">
+								<table>
+									<tr ng-repeat="goods in addConsumptionInfo.selectedGoodsList">
+										<td class="item-number">{{$index + 1}}</td>
+										<td class="goods-name">{{goods.name}}</td>
+										<td class="goods-technician" ng-class="{'err':goods.tcode == '303'}">{{goods.tname}}</td>
+										<td class="goods-price">{{goods.price/100 | currency:'￥'}}</td>
+										<td class="goods-number" ng-if="goods.state == 1">
+											<a class="sub-number" href="javascript:;" ng-click="changeSelectedGoodsNumber($index,false)">-</a>
+											<input type="text" value="{{goods.number}}" ng-bind="addConsumptionInfo.selectedGoodsList[$index]['number']" disabled="disabled">
+											<a class="add-number" href="javascript:;" ng-click="changeSelectedGoodsNumber($index,true)">+</a>
+										</td>
+										<td class="goods-number" ng-if="goods.state != 1">
+											<input type="text" value="{{goods.number}}" disabled="disabled">
+										</td>
+										<td class="goods-subtotal">{{goods.price*goods.number/100 | currency:'￥'}}</td>
+										<td class="item-func"><span ng-click="removeConsumption(goods.id)">取消</span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<a class="add-consumption-btn-sure" href="javascript:;" ng-click="makeAddConsumption()">确定</a>
+				</div>
+			</div>
+			<!-- 关闭按钮 -->
+			<div class="add-consumption-close close-btn" ng-click="closeAddConsumptionView()">×</div>
+			<!-- 服务类项目选择技师界面 -->
+			<div class="add-consumpyion-person" ng-if="cashierAlertView.addConsumptionTechnicianView">
+				<h3 class="title">选择技师</h3>
+				<div class="consumpyion-name">
+					<label class="label" for="">服务项目：</label><span>{{addConsumptionInfo.selectTechnicianInfo.goodsName}}</span>
+				</div>
+				<div class="consumpyion-technician">
+					<label class="label">查询技师：</label>
+					<input type="text" ng-model="addConsumptionInfo.selectTechnicianInfo.searchText">
+				</div>				
+				<div class="select-technician-list">
+					<table class="select-technician-list-head">
+						<tr>
+							<td class="item"></td>
+							<td class="name">技师姓名</td>
+							<td class="sex">技师性别</td>
+							<td class="number">技师编号</td>
+							<td class="state">当前状态</td>
+						</tr>
+					</table>
+					<div class="select-technician-list-body">
+						<div class="select-technician-list-main">
+							<table>
+								<tr ng-repeat="technician in addConsumptionInfo.selectTechnicianInfo.selectTechnicianList | filter:addConsumptionInfo.selectTechnicianInfo.searchText" ng-class="{'able':technician.state == '1','select':technician.id == addConsumptionInfo.selectTechnicianInfo.technicianID}" ng-click="selectTechnician(technician.id,technician.state,technician.names)">
+									<td class="item">{{$index + 1}}</td>
+									<td class="name">{{technician.names}}</td>
+									<td class="sex">{{technician.sex | filterSex}}</td>
+									<td class="number">{{technician.number}}</td>
+									<td class="state">{{technician.state | filterTechnicianState}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- 按钮 -->
+				<div class="btn-group">
+					<a class="sure" href="javascript:;" ng-click="makeSelectTechnician()">确定</a>
+					<a class="cancel" href="javascript:;" ng-click="closeSelectTechnician()">取消</a>
+				</div>
+			</div>
+			<!-- 服务类项目添加界面 end -->
+		</div>
+	</div>
+</div>

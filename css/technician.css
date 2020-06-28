@@ -1,0 +1,486 @@
+@charset "utf-8";
+
+/*technician*/
+.technician{
+	width:100%;
+	height:auto;
+	overflow:hidden;
+	padding:20px 0 40px;
+}
+.technician-page-index, .technician-page-info{
+	width:100%;
+	height:auto;
+	overflow: hidden;
+}
+	/*技师首页侧边栏导航*/
+.technician-sidebar{
+	float:left;
+	width:172px;
+	height:auto;
+	border:1px solid #ccc;
+	padding-bottom:30px;
+	background-color:#eceaea;
+}
+.technician-sidebar .technician-kinds{
+	width:100%;
+}
+.technician-sidebar .technician-kinds li{
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	color:#333;
+	cursor:pointer;
+}
+.technician-sidebar .technician-kinds li:nth-of-type(1){
+	height:48px;
+	line-height: 48px;
+	font-size: 16px;
+}
+.technician-sidebar .technician-kinds li:nth-of-type(1) span{
+	font-weight: bolder;
+}
+.technician-sidebar .technician-kinds li:hover{
+	background-color:#dbd8d8;
+}
+.technician-sidebar .technician-kinds li.select{
+	font-weight: bolder;
+	color:#cf3d14;
+	background-color:#dbd8d8;
+}
+	/*添加新技师按钮*/
+.technician-sidebar .add-new-technician-btn{
+	display: block;
+	width:160px;
+	height:40px;
+	text-align: center;
+	line-height: 40px;
+	color:#fff;
+	font-size: 14px;
+	background-color:#e79100;
+	margin:13px auto 0;
+}
+	/*technician主内容区*/
+.technician .technician-content{
+	width:1006px;
+	height:auto;
+	overflow: hidden;
+	float:right;
+}
+	/*技师列表界面*/
+.technician-content .technician-content-all{
+	width: 1006px;
+	height:auto;
+	overflow: hidden;
+}
+.technician-content .technician-content-all .title{
+	box-sizing:border-box;
+	height:16px;
+	line-height: 16px;
+	font-weight:bolder;
+	font-size: 14px;
+	color: #333;
+	border-left:3px solid #cf3d14;
+	margin-bottom: 14px;
+	text-indent:10px;
+}
+.technician-content-all .technician-search{
+	height:52px;
+	margin-bottom: 10px;
+}
+.technician-content-all .technician-search input{
+	box-sizing:border-box;
+	width:187px;
+	height:52px;
+	border:1px solid #ccc;
+	font-size: 14px;
+	text-indent:15px;
+}
+.technician-content-all .technician-search a{
+	display:inline-block;
+	box-sizing:border-box;
+	width:58px;
+	height:52px;
+	border:1px solid #ccc;
+	text-align: center;
+	line-height: 52px;
+	font-size: 14px;
+	color:#333;
+}
+.technician-content-all .technician-list{
+	width:1006px;
+}
+.technician-content-all .technician-list thead{
+	border:1px solid #ccc;
+	background-color:#fff;
+}
+.technician-content-all .technician-list td{
+	text-align: center;
+	font-size: 14px;
+	color:#333;
+}
+.technician-content-all .technician-list thead td{
+	height:50px;
+	font-weight: bolder;
+	line-height: 50px;
+}
+.technician-content-all .technician-list tbody td{
+	line-height: 40px;
+}
+.technician-content-all .technician-list tbody tr{
+	border-bottom:1px solid #ccc;
+}
+.technician-content-all .technician-list tbody tr:hover{
+	background-color:#f7e9e4;
+}
+.technician-content-all .technician-list .technician-func{
+	width:142px;
+}
+.technician-content-all .technician-list tr .technician-info{
+	display:none;
+	width:47px;
+	height:23px;
+	line-height: 23px;
+	border-radius:10px;
+	background-color:#cf3d14;
+	color:#fff;
+	font-size: 14px;
+	cursor:pointer;
+}
+.technician-content-all .technician-list tr:hover .technician-info{
+	display:inline-block;
+}
+.technician-content-all .technician-list tr .technician-del{
+	display:none;
+	color:#cf3d14;
+	font-size: 14px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+.technician-content-all .technician-list tr:hover .technician-del{
+	display: inline;
+}
+	/*删除技师确定界面*/
+.technician .del-technician-view .del-technician-view-close{
+	position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -22px;
+}
+	/*技师编辑界面*/
+.technician-content .technician-edit{
+	width: 1006px;
+	height:auto;
+	overflow: hidden;
+}
+.technician-content .technician-edit .title{
+	box-sizing:border-box;
+	height:16px;
+	line-height: 16px;
+	font-weight:bolder;
+	font-size: 14px;
+	color: #333;
+	border-left:3px solid #cf3d14;
+	text-indent:10px;
+}
+.technician-content .technician-edit .technician-edit-content{
+	width:1006px;
+	height:auto;
+	overflow: hidden;
+	margin-top: 15px;
+	border-top:1px solid #ccc;
+	padding:16px 0;
+}
+.technician-edit-content .item-group{
+	width:1006px;
+	height:auto;
+	overflow: hidden;
+	margin-bottom: 16px;
+	user-select:none;
+	-moz-user-select:none;
+}
+.technician-edit-content .item-group .left-text{
+	width:60px;
+	float:left;
+}
+.technician-edit-content .item-group .right-edit{
+	width:930px;
+	height:auto;
+	overflow: hidden;
+	float:right;
+}
+.item-group .left-text p{
+	font-size: 14px;
+	color:#333;
+	text-align: right;
+	line-height: 42px;
+}
+.item-group .right-edit .edit-img{
+	position:relative;
+	width:160px;
+	height:210px;
+	border:1px solid #ccc;
+	background-color:#333;
+	cursor:pointer;
+}
+.item-group .right-edit .edit-img:before{
+	content:'';
+	display:block;
+	position:absolute;
+	width:70px;
+	height:20px;
+	top:70px;
+	left:45px;
+	background-color:#fff;
+}
+.item-group .right-edit .edit-img:after{
+	content:'';
+	display: block;
+	position:absolute;
+	width:20px;
+	height:70px;
+	top:45px;
+	left:70px;
+	background-color: #fff;
+}
+.item-group .right-edit .edit-img p{
+	position: absolute;
+	width:100%;
+	font-size: 14px;
+	text-align: center;
+	color:#fff;
+	top:150px;
+	user-select:none;
+	-user-select:none;
+}
+.item-group .right-edit .edit-img input{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	opacity: 0;
+	z-index: 20;
+	cursor:pointer;
+}
+.item-group .right-edit .edit-img img{
+	position:absolute;
+	top:0;
+	left: 0;
+	width:100%;
+	height:100%;
+	z-index: 10;
+}
+.technician-edit-content .edit-technician-name input{
+	box-sizing:border-box;
+	height:42px;
+	border:1px solid #ccc;
+	width:287px;
+	font-size: 14px;
+	text-indent:20px;
+}
+.technician-edit-content .edit-technician-sex span, .edit-technician-service .service-item span{
+	position:relative;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	top:4px;
+	margin-right: 5px;
+	cursor:pointer;
+}
+.technician-edit-content .edit-technician-sex .right-edit, .edit-technician-service .right-edit{
+	position: relative;
+	font-size: 14px;
+	line-height: 42px;
+}
+.technician-edit-content .edit-technician-sex span i, .edit-technician-service .service-item span i{
+	display:none;
+	position:absolute;
+	font-size: 17px;
+	top:-12px;
+	left:-1px;
+}
+.technician-edit-content .edit-technician-sex .select i, .edit-technician-service .service-item .select i{
+	display:inline-block;
+}
+.technician-edit-content .edit-technician-birthday input{
+	box-sizing:border-box;
+	width: 287px;
+	height:42px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	font-size: 14px;
+	text-indent:20px;
+}
+.technician-edit-content .edit-technician-service .service-item{
+	display:inline-block;
+}
+.technician-edit-content .edit-technician-lock select{
+	box-sizing:border-box;
+	width:110px;
+	height:42px;
+	background-color: #fff;
+	border:1px solid #ccc;
+	font-size: 14px;
+}
+.technician-edit-content .edit-technician-lock span{
+	color:#e79100;
+	font-size: 12px;
+	line-height: 42px;
+	margin-left:20px;
+}
+.technician-edit-content .edit-technician-introduce textarea{
+	width:612px;
+	height:138px;
+	resize:none;
+	font-size: 14px;
+	padding:10px;
+}
+.technician-edit-content .edit-btn .edit-btn-sure{
+	display:inline-block;
+	width:80px;
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+	background-color:#cf3d14;
+	color:#fff;
+	font-size: 14px;
+}
+.technician-edit .code-image{
+	position:fixed;
+	z-index:1020;
+	width:200px;
+	height:300px;
+	top:50%;
+	left:50%;
+	margin-top: -150px;
+	margin-left:-100px;
+}
+.technician-edit .code-image img{
+	width:200px;
+	height:200px;
+	vertical-align: middle;
+}
+.technician-edit .code-image .image-close{
+	position:absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-22px;
+}
+
+/*技师详情页*/
+.technician .technician-page-info{
+	width:100%;
+	height:auto;
+	overflow: hidden;
+}
+.technician-page-info .technician-personal-info{
+	width:260px;
+	height:auto;
+	padding-bottom:150px;
+	border:1px solid #ccc; 
+	background-color:#f1f1f1;
+	float:left;
+}
+.technician-personal-info .technician-head{
+	width:98px;
+	height:98px;
+	border:4px solid #fff;
+	border-radius:100%;
+	margin:20px auto 3px;
+	overflow: hidden;
+}
+.technician-personal-info .technician-head img{
+	width:98px;
+	height:98px;
+	vertical-align: middle;
+}
+.technician-personal-info .technician-name{
+	height: 30px;
+	line-height: 30px;
+	color: #e79100;
+	font-size: 20px;
+	font-weight: bolder;
+	text-align: center;
+}
+.technician-personal-info .technician-sex{
+	height: 18px;
+	line-height: 18px;
+	font-size: 14px;
+	color: #333;
+	text-align: center;
+}
+.technician-personal-info .technician-other-info{
+	width: 260px;
+	background-color: #e0e0e0;
+	padding: 12px 20px 20px;
+	box-sizing: border-box;
+	margin-top: 15px;
+}
+.technician-personal-info .technician-other-info p{
+	line-height: 22px;
+	font-size: 14px;
+	word-wrap:break-word;
+}
+.technician-personal-info .technician-other-info p span{
+	color:#777;
+}
+.technician-personal-info .technician-change-info-btn{
+	display: block;
+	width: 242px;
+	height: 43px;
+	line-height: 43px;
+	text-align: center;
+	font-size: 14px;
+	color: #fff;
+	background-color: #cf3d14;
+	margin: 15px auto 0;
+}
+.technician-page-info .technician-service-info{
+	float:right;
+	width:920px;
+}
+.technician-page-info .technician-service-info .title{
+	box-sizing: border-box;
+	height: 16px;
+	line-height: 16px;
+	font-size: 14px;
+	color: #333;
+	border-left: 3px solid #cf3d14;
+	margin-bottom: 14px;
+	text-indent: 10px;
+}
+.technician-page-info .technician-service-info .title span{
+	cursor:pointer;
+}
+.technician-page-info .technician-service-info .title span:hover{
+	font-weight: bolder;
+}
+	/*技师服务记录列表*/
+.technician-service-info .technician-service-list{
+	width:100%;
+}
+.technician-service-info .technician-service-list thead{
+	border:1px solid #ccc;
+	background-color:#fff;
+}
+.technician-service-list td{
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	color:#333;
+}
+.technician-service-list thead td{
+	height:50px;
+}
+.technician-service-list tbody td{
+	height:40px;
+}
+.technician-service-list tbody tr{
+	border-bottom:1px solid #ccc;
+}
+.technician-service-list tbody tr:hover{
+	background-color:#f3d6ce;
+}

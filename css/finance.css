@@ -1,0 +1,227 @@
+@charset "utf-8";
+
+/*finance*/
+.finance{
+	width:100%;
+	height:auto;
+	overflow:hidden;
+	padding:20px 0 40px;
+}
+.finance .finance-sidebar{
+	width:188px;
+	height:auto;
+	float: left;
+	box-sizing:border-box;
+	border:1px solid #dbd8d8;
+	background-color:#eceaea;
+}
+.finance .finance-content{
+	width:992px;
+	height:auto;
+	float:right;
+}
+.finance-sidebar-list li{
+	height:50px;
+	line-height: 50px;
+	cursor:pointer;
+}
+.finance-sidebar-list li:hover{
+	background-color:#dbd8d8;
+}
+.finance-sidebar-list li .iconfont{
+	font-size: 24px;
+	margin-left: 23px;
+	margin-right: 14px;
+	color:#666;
+	float:left;
+}
+.finance-sidebar-list li span{
+	font-size: 14px;
+	color:#333;
+	font-weight: 900;
+	float:left;
+}
+.finance-sidebar-list .business{
+	height:auto;
+}
+.finance-sidebar-list .business:hover{
+	background:none;
+}
+.finance-sidebar-list .selected{
+	background-color:#dbd8d8;
+}
+.finance-sidebar-list .selected .iconfont, .finance-sidebar-list .selected span{
+	color:#cf3d14;
+}
+.finance-sidebar-list .business-list{
+	width:100%;
+}
+.finance-sidebar-list .business-list li{
+	height:46px;
+	line-height: 46px;
+	color:#666;
+	font-size: 14px;
+	text-indent: 62px;
+}
+.finance-sidebar-list .business-list li:nth-of-type(1){
+	text-indent: 0;
+}
+.finance-sidebar-list .business-list li:nth-of-type(1).selected{
+	background-color:#dbd8d8;
+	color:#cf3d14;
+}
+.finance-sidebar-list .business-list li:nth-of-type(1):hover{
+	background-color:#dbd8d8;
+}
+.finance-sidebar-list .business-list li:nth-of-type(1) .iconfont{
+	font-size: 24px;
+	margin-left: 23px;
+	margin-right: 14px;
+	float:left;
+}
+.finance-sidebar-list .business-list li:nth-of-type(1) span{
+	font-size: 14px;
+	font-weight: 900;
+	float:left;
+}
+.finance-sidebar-list .business-list li:hover{
+	background: none;
+}
+.finance-sidebar-list .business-list .selected{
+	background: none;
+	color:#cf3d14;
+}
+
+/*财务主区域*/
+.finance .finance-content{
+	width:992px;
+	float:right;
+	overflow: hidden;
+}
+.finance-content .wrap-box{
+	width:100%;
+	overflow: hidden;
+}
+.finance-content .wrap-box h3{
+	padding:10px 0;
+}
+.finance-content .wrap-box .title{
+	width:100%;
+	height:16px;
+	padding-bottom:14px;
+	border-bottom:1px solid #ccc;
+	margin-bottom:20px;
+}
+.finance-content .wrap-box .title p{
+	height:16px;
+	font-size: 12px;
+	color:#333;
+	border-left:3px solid #cf3d14;
+	text-indent: 6px;
+}
+.finance-content .wrap-box .search-wrap{
+	width:100%;
+	height:42px;
+	margin-bottom:9px;
+}
+.finance-content .wrap-box .search-wrap>*{
+	float:left;
+}
+.finance-content .wrap-box .search-wrap span{
+	line-height: 42px;
+	font-size: 12px;
+	color:#333;
+	margin-right:10px;
+}
+.finance-content .wrap-box .search-wrap input{
+	box-sizing:border-box;
+	width:172px;
+	height:42px;
+	border:1px solid #ccc;
+	font-size: 12px;
+	text-indent: 14px;
+	background:url(/Public/Home/images/timeicon_03.png) no-repeat 137px 10px;
+	margin-right: 10px;
+	background-color:#fff;
+}
+.finance-content .wrap-box .search-wrap input:nth-of-type(3){
+	background:none;
+	background-color:#fff;
+}
+.finance-content .wrap-box .search-wrap a{
+	display:inline-block;
+	box-sizing:border-box;
+	width:58px;
+	height:42px;
+	text-align: center;
+	line-height: 42px;
+	font-size: 12px;
+	margin-right: 10px;
+}
+.finance-content .wrap-box .search-wrap .search-btn{
+	border:1px solid #cf3d14;
+	color:#fff;
+	background-color:#cf3d14;
+}
+.finance-content .wrap-box .search-wrap .export-btn{
+	border:1px solid #cf3d14;
+	color:#cf3d14;
+}
+.finance-content .wrap-box .list{
+	width:100%;
+	margin-bottom: 30px;
+}
+.finance-content .list thead tr{
+	border:1px solid #ccc;
+}
+.finance-content .list tbody tr{
+	border-bottom:1px solid #ccc;
+}
+.finance-content .list tbody tr:hover{
+	background-color:#f3f3f3;
+}
+.finance-content .list td{
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+}
+.finance-content .list thead td{
+	height:50px;
+	background-color:#fff;
+}
+.finance-content .list tbody td{
+	height:46px;
+	line-height: 46px;
+}
+.finance-content .amount{
+	height:32px;
+}
+.finance-content .amount span{
+	float:right;
+	line-height: 44px;
+	font-size: 14px;
+	color:#333;
+}
+.finance-content .amount .total{
+	line-height: 32px;
+	font-size: 32px;
+	color:#cf3d14;
+	margin-right: 20px;
+}
+.finance-content .amount .count{
+	line-height: 40px;
+	font-size: 20px;
+	color:#cf3d14;
+	font-weight: 900;
+	margin-right: 20px;
+}
+.finance-content .business-detail .list .goodsName{
+	width:40px;
+	line-height: 14px;
+}
+.finance-content .business-detail .list  tr:hover{
+	background:none;
+}
+.finance-content .business-detail .list tbody:hover{
+	background:#f3f3f3;
+}

@@ -1,0 +1,1 @@
+var projectB = angular.module("projectB",["ngRoute","ngAnimate","angular-timedropper"]);
